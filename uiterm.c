@@ -64,13 +64,23 @@ void show_tableau(card_stack *tableau, size_t row){
 }
 
 void show_window(card_stack *window){
-  printf(" ");
-  printf(" ");
+  //Making sure of correct alignment with space
+  printf("  ");
   switch (window->number) {
     case 1:
       show_card(INVALID_CARD, NONE);
+    //show_card with none will print the corresponding space
+    //for proper right justification of the cards and since
+    //we will need to print 2 card spaces if there isonly one
+    //card on the window this falthrough is intentional
     case 2:
       show_card(INVALID_CARD, NONE);
+    //Now this falthrough is also intentional becuase in the
+    //next case the window is shown with the correct number
+    //of cards without taking extra spaces to acount for
+    //total capacity. I would have loved to use something 
+    //similar to show the case when it is empty, maybe later
+    //I will revisit and think of something clever to do in here
     case 3:
       show_side_stack(window);
       break;

@@ -63,7 +63,6 @@ card ppop(card_stack *stack);
 card qpop(card_stack *queue);
 card ppeek(card_stack *stack);
 card qpeek(card_stack *stack);
-card qpeek(card_stack *stack);
 int push(card a, card_stack *stack);
 int qunpop(card a, card_stack *stack);
 
