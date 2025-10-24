@@ -1,0 +1,112 @@
+#include "uiterm.h"
+
+void show_card(card a, card_state state) {
+  int color[] = {31, 31, 30, 30};
+  char *suitdisplay[] = {"♥", "♦", "♣", "♠"};
+  char *rankdisplay[]= {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+
+  switch (state) {
+    case NONE:
+      printf("   ");
+      break;
+    case EMPTY:
+      printf("[O]");
+      break;
+    case HIDDEN:
+      printf("▓▓▓");
+      break;
+    case VISIBLE:
+      printf("\033[47m\033[%dm%2s%s\033[0m", color[a.s], rankdisplay[a.r],
+             suitdisplay[a.s]);
+      break;
+    case SELECTED:
+      printf("\033[45m\033[%dm%2s%s\033[0m", color[a.s], rankdisplay[a.r],
+             suitdisplay[a.s]);
+      break;
+  }
+}
+
+void show_side_stack(card_stack *stack){
+  for (size_t index = 0; index < ((stack->number<1)? 0: 1); index++){
+  show_card(stack->cards[((stack->front + index)%(stack->capacity))],SELECTED);
+  }
+  for (size_t index = 1; index < stack->number; index++){
+    show_card(stack->cards[((stack->front + index)%(stack->capacity))],VISIBLE);
+  }
+}
+
+void show_deck(card_stack *stack){
+  for (size_t index = 0; index < stack->number; index++){
+    show_card(stack->cards[((stack->front + index)%(stack->capacity))],VISIBLE);
+    printf(( (index % 13) == 12)? "\n\n" : " ");
+  }
+  printf("\n");
+}
+
+void show_fundation(card_stack *fundation){
+  card a = ppeek(fundation);
+  show_card(a,((COMPARE_EQ(a,INVALID_CARD))? EMPTY: VISIBLE));
+}
+
+void show_tableau(card_stack *tableau, size_t row){
+  if(row == 0 && tableau->number == 0){
+    show_card(INVALID_CARD, EMPTY);
+  }
+  else if( row >= tableau->number){
+    show_card(INVALID_CARD,NONE);
+  } else if( row < tableau->front){
+    show_card(tableau->cards[row],HIDDEN);
+  } else if (row == tableau->number-1){
+    show_card(tableau->cards[row],SELECTED);
+  } else {
+    show_card(tableau->cards[row],VISIBLE);
+  }
+}
+
+void show_window(card_stack *window){
+  printf(" ");
+  printf(" ");
+  switch (window->number) {
+    case 1:
+      show_card(INVALID_CARD, NONE);
+    case 2:
+      show_card(INVALID_CARD, NONE);
+    case 3:
+      show_side_stack(window);
+      break;
+    default:
+      show_card(INVALID_CARD, NONE);
+      show_card(INVALID_CARD, NONE);
+      show_card(INVALID_CARD, EMPTY);
+      break;
+  }
+}
+
+void inline show_waste(card_stack *stack){
+  show_fundation(stack);
+}
+
+void show_stock(card_stack *stack){
+  if(!stack->number) show_card(INVALID_CARD,EMPTY);
+  else show_card(INVALID_CARD,HIDDEN);
+}
+
+void show_game_state(game_state_solitary *game){
+  for (size_t i = 0; i < 4; i++) {
+    show_fundation(&(game->fundation[i]));
+    printf(" ");
+  }
+  show_window(&(game->window));
+  show_stock(&(game->waste_stock));
+  printf("\n\n");
+  for(size_t row = 0; row <19 ;row++){
+  for (size_t i = 0; i < 7; i++) {
+    show_tableau(&(game->tableau[i]),row);
+    printf(" ");
+  }
+  printf("\n");
+  }
+  printf("\n\n");
+  show_side_stack(&(game->hand));
+  printf("\n");
+}
