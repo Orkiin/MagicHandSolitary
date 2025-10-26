@@ -64,14 +64,6 @@ typedef enum {
   K
 } rank;
 
-typedef enum {
-  NONE,
-  EMPTY,
-  HIDDEN,
-  VISIBLE,
-  SELECTED,
-} card_state;
-
 typedef struct {
   suit s;
   rank r;

@@ -4,6 +4,16 @@
 #include "cards.h"
 #include "magichandsolitary.h"
 
+typedef enum {
+  NONE,
+  EMPTY,
+  HIDDEN,
+  VISIBLE,
+  SELECTED,
+  GROUP_SELECTED,
+  SIDE_STACKED,
+} card_state;
+
 void show_card(card a, card_state state);
 void show_side_stack(card_stack *stack);
 void show_deck(card_stack *stack);
