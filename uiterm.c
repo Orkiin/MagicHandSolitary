@@ -1,7 +1,11 @@
 #include "uiterm.h"
 
+#define NORMAL_BG "\033[47m"
+#define SELECTED_BG "\033[45m"
 #define COLOR_RED "\033[31m"
 #define COLOR_BLACK "\033[30m"
+#define RESET_DEFAULT_OLOR "\033[0m"
+
 #define STR_CARD_COLOR(c) (IS_RED_SUIT((c).s)? COLOR_RED : COLOR_BLACK)
 
 void show_card(card a, card_state state) {
@@ -18,12 +22,14 @@ void show_card(card a, card_state state) {
     case HIDDEN:
       printf("▓▓▓");
       break;
-    case VISIBLE:
-      printf("\033[47m%s%2s%s\033[0m", STR_CARD_COLOR(a), rankdisplay[a.r],
+    case SELECTED:
+    case GROUP_SELECTED:
+    case SIDE_STACKED:
+      printf(SELECTED_BG "%s%2s%s" RESET_DEFAULT_OLOR, STR_CARD_COLOR(a), rankdisplay[a.r],
              suitdisplay[a.s]);
       break;
-    case SELECTED:
-      printf("\033[45m%s%2s%s\033[0m", STR_CARD_COLOR(a), rankdisplay[a.r],
+    case VISIBLE:
+      printf(NORMAL_BG "%s%2s%s" RESET_DEFAULT_OLOR, STR_CARD_COLOR(a), rankdisplay[a.r],
              suitdisplay[a.s]);
       break;
   }
