@@ -1,6 +1,8 @@
 #ifndef UI_TERM_H
 #define UI_TERM_H
 
+#include <stdio.h>
+
 #include "cards.h"
 #include "magichandsolitary.h"
 
