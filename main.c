@@ -1,18 +1,19 @@
 #include "cards.h"
 #include "magichandsolitary.h"
 #include "uiterm.h"
+#include <stdlib.h>
 
 int main(void) {
   game_state_solitary game = {0};
   new_game(&game);
   show_game_state(&game);
-  push(qpop(&(game.waste_stock)), &(game.window));
-  push(qpop(&(game.waste_stock)), &(game.window));
-  push(qpop(&(game.waste_stock)), &(game.window));
-  show_game_state(&game);
-  push(qpop(&(game.window)), &(game.hand));
-  show_game_state(&game);
-  qunpop(ppop(&(game.tableau[3])), &(game.hand));
+  for (int i = 0; i < 12; i++) {
+    draw_stock(&game);
+    show_game_state(&game);
+    move_window_fundation(&game);
+    if (rand() % 100 < 50)
+      move_window_hand(&game);
+  }
   show_game_state(&game);
   return EXIT_SUCCESS;
 }
