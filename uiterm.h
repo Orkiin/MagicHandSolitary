@@ -22,8 +22,8 @@ void show_deck(card_stack *stack);
 void show_fundation(card_stack *fundation);
 void show_tableau(card_stack *tableau, size_t row);
 void show_window(card_stack *window);
-void inline show_waste(card_stack *stack) { show_fundation(stack); }
 void show_stock(card_stack *stack);
+void show_hand(card_stack *hand);
 void show_game_state(game_state_solitary *game);
 
 #endif // !UI_TERM_H

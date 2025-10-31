@@ -111,6 +111,20 @@ void show_stock(card_stack *stack) {
     show_card(INVALID_CARD, HIDDEN);
 }
 
+void show_hand(card_stack *hand){
+  switch(hand->number){
+    case 0:
+      break;
+    case 1:
+      show_fundation(hand);
+      break;
+    defaukt:
+      show_fundation(hand);
+      printf("▓");
+    break;
+  }
+}
+
 void show_game_state(game_state_solitary *game) {
   for (size_t i = 0; i < 4; i++) {
     show_fundation(&(game->fundation[i]));
@@ -119,14 +133,14 @@ void show_game_state(game_state_solitary *game) {
   show_window(&(game->window));
   show_stock(&(game->stock));
   printf("\n\n");
-  /*for (size_t row = 0; row < 19; row++) {
+  for (size_t row = 0; row < 19; row++) {
     for (size_t i = 0; i < 7; i++) {
       show_tableau(&(game->tableau[i]), row);
       printf(" ");
     }
     printf("\n");
   }
-  printf("\n");*/
-  show_side_stack(&(game->hand));
+  printf("\n");
+  show_hand(&(game->hand));
   printf("\n");
 }

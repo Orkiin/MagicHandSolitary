@@ -4,6 +4,16 @@
 #include <stdio.h>
 
 #define HAND_IS_EMPTY(game) COMPARE_EQ(qpeek(&game->hand), INVALID_CARD)
+#define WINDOW_IS_EMPTY(game) (game->window.number == 0)
+#define LAST_FROM_TABLEAU_IS_VISSIBLE(tableau) ((tableau)->front != (tableau)->number)
+
+void commit_changes_tableau(game_state_solitary *game){
+  for(int i = 0; i < 7; i++){
+    if(!LAST_FROM_TABLEAU_IS_VISSIBLE(&(game->tableau[i]))){
+      (game->tableau[i].front)--;
+    }
+  }
+}
 
 bool new_game(game_state_solitary *game) {
   for (size_t i = 0; i < 4; i++) {
@@ -64,19 +74,22 @@ int can_move_to_fundation(game_state_solitary *game, card c) {
 int can_move_to_hand(game_state_solitary *game, card c) {
   card in_hand = qpeek(&game->hand);
   return HAND_IS_EMPTY(game) ||
-         (DIFFERENT_COLOR(c, in_hand) && PREVIOUS_RANK(c, in_hand));
+         (DIFFERENT_COLOR(c, in_hand) && NEXT_RANK(c, in_hand));
 }
 
 int can_move_to_tableau(game_state_solitary *game, card c, int tableau_index) {
   card_stack *current_tableu = &game->tableau[tableau_index];
-  return !(current_tableu->front == current_tableu->number) ||
+  return (((current_tableu->number == 0) && (c.r == K)) || ((LAST_FROM_TABLEAU_IS_VISSIBLE(current_tableu)) &&
          (DIFFERENT_COLOR(c, ppeek(current_tableu)) &&
-          NEXT_RANK(c, ppeek(current_tableu)));
+          NEXT_RANK(c, ppeek(current_tableu)))));
 }
 
 bool move_window_fundation(game_state_solitary *game) {
   if (can_move_to_fundation(game, qpeek(&game->window))) {
     card a = qpop(&game->window);
+    if(WINDOW_IS_EMPTY(game)){
+      push(ppop(&game->waste),&game->window);
+    }
     return true * push(a, &game->fundation[a.s]) || false;
   }
   return false;
@@ -84,6 +97,10 @@ bool move_window_fundation(game_state_solitary *game) {
 
 bool move_window_tableau(game_state_solitary *game, int tableau_index) {
   if (can_move_to_tableau(game, qpeek(&game->window), tableau_index)) {
+    push(qpop(&game->window),&game->tableau[tableau_index]);
+    if(WINDOW_IS_EMPTY(game)){
+      push(ppop(&game->waste),&game->window);
+    }
     return true;
   }
   return false;
@@ -92,6 +109,41 @@ bool move_window_tableau(game_state_solitary *game, int tableau_index) {
 bool move_window_hand(game_state_solitary *game) {
   if (HAND_IS_EMPTY(game)) {
     push(qpop(&game->window), &game->hand);
+    if(WINDOW_IS_EMPTY(game)){
+      push(ppop(&game->waste),&game->window);
+    }
+    return true;
+  }
+  return false;
+}
+
+bool move_hand_tableau(game_state_solitary *game, int tableau_index){
+  if(can_move_to_tableau(game, ppeek(&game->hand), tableau_index)){
+    for(card iter = ppop(&game->hand); !COMPARE_EQ(iter,INVALID_CARD); iter = ppop(&game->hand)){
+      push(iter, &game->tableau[tableau_index]);
+    }
+    commit_changes_tableau(game);
+    return true;
+  }
+  return false;
+}
+
+bool move_tableau_hand(game_state_solitary *game, int tableau_index){
+  if(can_move_to_hand(game, ppeek(&(game->tableau[tableau_index])))){
+    push(ppop(&(game->tableau[tableau_index])), &game->hand);
+    return true;
+  }
+  return false;
+}
+
+bool move_tableau_fundation(game_state_solitary *game, int tableau_index){
+  card_stack *current_tableau = &game->tableau[tableau_index];
+  if(can_move_to_fundation(game, ppeek(current_tableau))){
+    card a = ppop(current_tableau);
+    if(!LAST_FROM_TABLEAU_IS_VISSIBLE(current_tableau)){
+      (current_tableau->front)--;
+    }
+    push(a,&game->fundation[a.r]);
     return true;
   }
   return false;

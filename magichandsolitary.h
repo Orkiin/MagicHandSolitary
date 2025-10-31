@@ -25,5 +25,8 @@ void draw_stock(game_state_solitary *game);
 bool move_window_fundation(game_state_solitary *game);
 bool move_window_tableau(game_state_solitary *game, int tableau_index);
 bool move_window_hand(game_state_solitary *game);
+bool move_hand_tableau(game_state_solitary *game, int tableau_index);
+bool move_tableau_hand(game_state_solitary *game, int tableau_index);
+bool move_tableau_fundation(game_state_solitary *game, int tableau_index);
 
 #endif // !MAGIC_HAND_SOLITARY_GAME
