@@ -16,6 +16,7 @@ typedef enum {
   SIDE_STACKED,
 } card_state;
 
+void setup();
 void show_card(card a, card_state state);
 void show_side_stack(card_stack *stack);
 void show_deck(card_stack *stack);

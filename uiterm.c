@@ -1,4 +1,9 @@
 #include "uiterm.h"
+#include "cards.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <termios.h>
+#include <unistd.h>
 
 #define NORMAL_BG "\033[47m"
 #define SELECTED_BG "\033[44m"
@@ -7,6 +12,21 @@
 #define RESET_DEFAULT_OLOR "\033[0m"
 
 #define STR_CARD_COLOR(c) (IS_RED_SUIT((c).s) ? COLOR_RED : COLOR_BLACK)
+
+static struct termios original_termios;
+
+void restore() { tcsetattr(STDIN_FILENO, TCSAFLUSH, &original_termios); }
+
+void setup() {
+  struct termios new_termios;
+  tcgetattr(STDIN_FILENO, &original_termios);
+  new_termios = original_termios;
+  new_termios.c_lflag &= ~(ICANON | ECHO);
+  new_termios.c_cc[VMIN] = 1;
+  new_termios.c_cc[VTIME] = 0;
+  tcsetattr(STDIN_FILENO, TCSAFLUSH, &new_termios);
+  atexit(restore);
+}
 
 void show_card(card a, card_state state) {
   char *suitdisplay[] = {"♥", "♦", "♣", "♠"};
@@ -111,16 +131,27 @@ void show_stock(card_stack *stack) {
     show_card(INVALID_CARD, HIDDEN);
 }
 
-void show_hand(card_stack *hand){
-  switch(hand->number){
-    case 0:
-      break;
-    case 1:
-      show_fundation(hand);
-      break;
-    defaukt:
-      show_fundation(hand);
-      printf("▓");
+void show_hand(card_stack *hand) {
+  switch (hand->number) {
+  case 0:
+    show_card(INVALID_CARD, NONE);
+    break;
+  case 1:
+    show_card(ppeek(hand), VISIBLE);
+    break;
+  case 2:
+  case 3:
+  case 4:
+  case 5:
+  case 6:
+  case 7:
+  case 8:
+  case 9:
+  case 10:
+  case 11:
+  case 12:
+    show_card(ppeek(hand), VISIBLE);
+    printf("▓");
     break;
   }
 }
