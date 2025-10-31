@@ -5,17 +5,31 @@
 #include <termios.h>
 #include <unistd.h>
 
-#define NORMAL_BG "\033[47m"
-#define SELECTED_BG "\033[44m"
-#define COLOR_RED "\033[31m"
-#define COLOR_BLACK "\033[30m"
-#define RESET_DEFAULT_OLOR "\033[0m"
+#define ESCAPESECUENCE "\033["
+#define ALTERNATE_BUFFER ESCAPESECUENCE "?1049h"
+#define ORIGINAL_BUFFER ESCAPESECUENCE "?1049l"
+#define HIDE_CURSOR ESCAPESECUENCE "?25l"
+#define SHOW_CURSOR ESCAPESECUENCE "?25h"
+#define CLEAR_SCREEN ESCAPESECUENCE "2J"
+#define BUFFER_HOME ESCAPESECUENCE "H"
+
+
+#define NORMAL_BG ESCAPESECUENCE "47m"
+#define SELECTED_BG ESCAPESECUENCE "44m"
+#define COLOR_RED ESCAPESECUENCE "31m"
+#define COLOR_BLACK ESCAPESECUENCE "30m"
+#define RESET_DEFAULT_COLOR ESCAPESECUENCE "0m"
 
 #define STR_CARD_COLOR(c) (IS_RED_SUIT((c).s) ? COLOR_RED : COLOR_BLACK)
 
 static struct termios original_termios;
 
-void restore() { tcsetattr(STDIN_FILENO, TCSAFLUSH, &original_termios); }
+void restore() { 
+  tcsetattr(STDIN_FILENO, TCSAFLUSH, &original_termios);
+  printf(SHOW_CURSOR);
+  printf(ORIGINAL_BUFFER);
+  fflush(stdout);
+}
 
 void setup() {
   struct termios new_termios;
@@ -25,6 +39,11 @@ void setup() {
   new_termios.c_cc[VMIN] = 1;
   new_termios.c_cc[VTIME] = 0;
   tcsetattr(STDIN_FILENO, TCSAFLUSH, &new_termios);
+  printf(ALTERNATE_BUFFER "\n");
+  printf(HIDE_CURSOR);
+  printf(CLEAR_SCREEN);
+  printf(BUFFER_HOME);
+  fflush(stdout);
   atexit(restore);
 }
 
@@ -45,12 +64,12 @@ void show_card(card a, card_state state) {
     break;
   case SELECTED:
   case GROUP_SELECTED:
-    printf(SELECTED_BG "%s%2s%s" RESET_DEFAULT_OLOR, STR_CARD_COLOR(a),
+    printf(SELECTED_BG "%s%2s%s" RESET_DEFAULT_COLOR, STR_CARD_COLOR(a),
            rankdisplay[a.r], suitdisplay[a.s]);
     break;
   case VISIBLE:
   case SIDE_STACKED:
-    printf(NORMAL_BG "%s%2s%s" RESET_DEFAULT_OLOR, STR_CARD_COLOR(a),
+    printf(NORMAL_BG "%s%2s%s" RESET_DEFAULT_COLOR, STR_CARD_COLOR(a),
            rankdisplay[a.r], suitdisplay[a.s]);
     break;
   }
@@ -157,6 +176,9 @@ void show_hand(card_stack *hand) {
 }
 
 void show_game_state(game_state_solitary *game) {
+  printf(CLEAR_SCREEN);
+  printf(BUFFER_HOME);
+  fflush(stdout);
   for (size_t i = 0; i < 4; i++) {
     show_fundation(&(game->fundation[i]));
     printf(" ");
@@ -173,5 +195,5 @@ void show_game_state(game_state_solitary *game) {
   }
   printf("\n");
   show_hand(&(game->hand));
-  printf("\n");
+  fflush(stdout);
 }
