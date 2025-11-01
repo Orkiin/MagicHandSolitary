@@ -1,68 +1,178 @@
+#include "inputcontrols.h"
 #include "magichandsolitary.h"
 #include "uiterm.h"
 #include <stdlib.h>
-#include <unistd.h>
-
-typedef enum {
-  EXIT = -1,
-  UNDEFINED,
-} key_pressed;
-
-key_pressed get_key() {
-  char c;
-  read(STDIN_FILENO, &c, 1);
-  switch (c) {
-  case 'q':
-  case 'Q':
-    return EXIT;
-  default:
-    return UNDEFINED;
-  }
-}
 
 int main(void) {
   setup();
   game_state_solitary game = {0};
   new_game(&game);
   show_game_state(&game);
-  if (get_key() == EXIT) {
-    return EXIT_SUCCESS;
-  }
-  while (true) {
-    draw_stock(&game);
-    show_game_state(&game);
-    if (get_key() == EXIT) {
-      return EXIT_SUCCESS;
-    }
-    while (move_window_fundation(&game) == true) {
+  for (key_pressed key = get_keypressed(); key != EXIT;
+       key = get_keypressed()) {
+    switch (key) {
+    case DRAW:
+      draw_stock(&game);
       show_game_state(&game);
-      if (get_key() == EXIT) {
-        return EXIT_SUCCESS;
-      }
-    }
-    int changed = 0;
-  TRY_AGAIN:
-    for (int j = 0; j < 7; j++) {
-      if (move_tableau_fundation(&game, j)) {
+      break;
+    case RESET:
+      new_game(&game);
+      show_game_state(&game);
+      break;
+    case WINDOW:
+      switch (get_keypressed()) {
+      case FUNDATION1:
+      case FUNDATION2:
+      case FUNDATION3:
+      case FUNDATION4:
+        move_window_fundation(&game);
         show_game_state(&game);
-        if (get_key() == EXIT) {
-          return EXIT_SUCCESS;
-        }
-      }
-    }
-    for (int j = 0; j < 7; j++) {
-      if (move_window_tableau(&game, j)) {
+        break;
+      case TABLEAU1:
+        move_window_tableau(&game, 0);
         show_game_state(&game);
-        if (get_key() == EXIT) {
-          return EXIT_SUCCESS;
-        }
-        j = 0;
-        changed = 1;
+        break;
+      case TABLEAU2:
+        move_window_tableau(&game, 1);
+        show_game_state(&game);
+        break;
+      case TABLEAU3:
+        move_window_tableau(&game, 2);
+        show_game_state(&game);
+        break;
+      case TABLEAU4:
+        move_window_tableau(&game, 3);
+        show_game_state(&game);
+        break;
+      case TABLEAU5:
+        move_window_tableau(&game, 4);
+        show_game_state(&game);
+        break;
+      case TABLEAU6:
+        move_window_tableau(&game, 5);
+        show_game_state(&game);
+        break;
+      case TABLEAU7:
+        move_window_tableau(&game, 6);
+        show_game_state(&game);
+        break;
+      default:
+        break;
       }
-    }
-    if (changed) {
-      changed = 0;
-      goto TRY_AGAIN;
+    case TABLEAU1:
+      switch (get_keypressed()) {
+      case FUNDATION1:
+      case FUNDATION2:
+      case FUNDATION3:
+      case FUNDATION4:
+        move_tableau_fundation(&game, 0);
+        show_game_state(&game);
+        break;
+      case HAND:
+        move_tableau_hand(&game, 0);
+        show_game_state(&game);
+        break;
+      default:
+        break;
+      }
+    case TABLEAU2:
+      switch (get_keypressed()) {
+      case FUNDATION1:
+      case FUNDATION2:
+      case FUNDATION3:
+      case FUNDATION4:
+        move_tableau_fundation(&game, 1);
+        show_game_state(&game);
+        break;
+      case HAND:
+        move_tableau_hand(&game, 1);
+        show_game_state(&game);
+        break;
+      default:
+        break;
+      }
+    case TABLEAU3:
+      switch (get_keypressed()) {
+      case FUNDATION1:
+      case FUNDATION2:
+      case FUNDATION3:
+      case FUNDATION4:
+        move_tableau_fundation(&game, 2);
+        show_game_state(&game);
+        break;
+      case HAND:
+        move_tableau_hand(&game, 2);
+        show_game_state(&game);
+        break;
+      default:
+        break;
+      }
+    case TABLEAU4:
+      switch (get_keypressed()) {
+      case FUNDATION1:
+      case FUNDATION2:
+      case FUNDATION3:
+      case FUNDATION4:
+        move_tableau_fundation(&game, 3);
+        show_game_state(&game);
+        break;
+      case HAND:
+        move_tableau_hand(&game, 3);
+        show_game_state(&game);
+        break;
+      default:
+        break;
+      }
+    case TABLEAU5:
+      switch (get_keypressed()) {
+      case FUNDATION1:
+      case FUNDATION2:
+      case FUNDATION3:
+      case FUNDATION4:
+        move_tableau_fundation(&game, 4);
+        show_game_state(&game);
+        break;
+      case HAND:
+        move_tableau_hand(&game, 4);
+        show_game_state(&game);
+        break;
+      default:
+        break;
+      }
+    case TABLEAU6:
+      switch (get_keypressed()) {
+      case FUNDATION1:
+      case FUNDATION2:
+      case FUNDATION3:
+      case FUNDATION4:
+        move_tableau_fundation(&game, 5);
+        show_game_state(&game);
+        break;
+      case HAND:
+        move_tableau_hand(&game, 5);
+        show_game_state(&game);
+        break;
+      default:
+        break;
+      }
+    case TABLEAU7:
+      switch (get_keypressed()) {
+      case FUNDATION1:
+      case FUNDATION2:
+      case FUNDATION3:
+      case FUNDATION4:
+        move_tableau_fundation(&game, 6);
+        show_game_state(&game);
+        break;
+      case HAND:
+        move_tableau_hand(&game, 6);
+        show_game_state(&game);
+        break;
+      default:
+        break;
+      }
+    default:
+      continue;
     }
   }
   return EXIT_SUCCESS;
