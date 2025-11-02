@@ -5,6 +5,8 @@
 #include <termios.h>
 #include <unistd.h>
 
+// TODO: Implementar visobilidad de cartas por cursor
+
 #define ESCAPESECUENCE "\033["
 #define ALTERNATE_BUFFER ESCAPESECUENCE "?1049h"
 #define ORIGINAL_BUFFER ESCAPESECUENCE "?1049l"
@@ -78,7 +80,7 @@ void show_card(card a, card_state state) {
 void show_side_stack(card_stack *stack) {
   for (size_t index = 0; index < ((stack->number < 1) ? 0 : 1); index++) {
     show_card(stack->cards[((stack->front + index) % (stack->capacity))],
-              SELECTED);
+              VISIBLE);
   }
   for (size_t index = 1; index < stack->number; index++) {
     show_card(stack->cards[((stack->front + index) % (stack->capacity))],

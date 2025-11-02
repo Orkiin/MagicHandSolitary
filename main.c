@@ -23,7 +23,7 @@ int main(void) {
     case FUNDATION2:
     case FUNDATION3:
     case FUNDATION4:
-      quick_fundation(&game);
+      quick_foundation(&game);
       show_game_state(&game);
       break;
     case QUICKTABLEAU:

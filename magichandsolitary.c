@@ -6,13 +6,13 @@
 #define HAND_IS_EMPTY(game) COMPARE_EQ(qpeek(&game->hand), INVALID_CARD)
 #define WINDOW_IS_EMPTY(game) (game->window.number == 0)
 #define TABLEAU_IS_EMPTY(tableau) ((tableau)->number == 0)
-#define LAST_FROM_TABLEAU_IS_VISSIBLE(tableau)                                 \
+#define LAST_FROM_TABLEAU_IS_VISIBLE(tableau)                                 \
   ((tableau)->front != (tableau)->number)
 
 void commit_changes_tableau(game_state_solitary *game) {
   for (int i = 0; i < 7; i++) {
     card_stack *current_tableau = &game->tableau[i];
-    if (!LAST_FROM_TABLEAU_IS_VISSIBLE(current_tableau) && !TABLEAU_IS_EMPTY(current_tableau)) {
+    if (!LAST_FROM_TABLEAU_IS_VISIBLE(current_tableau) && !TABLEAU_IS_EMPTY(current_tableau)) {
       (current_tableau->front)--;
     }
   }
@@ -83,7 +83,7 @@ int can_move_to_hand(game_state_solitary *game, card c) {
 int can_move_to_tableau(game_state_solitary *game, card c, int tableau_index) {
   card_stack *current_tableu = &game->tableau[tableau_index];
   return (((current_tableu->number == 0) && (c.r == K)) ||
-          ((LAST_FROM_TABLEAU_IS_VISSIBLE(current_tableu)) &&
+          ((LAST_FROM_TABLEAU_IS_VISIBLE(current_tableu)) &&
            (DIFFERENT_COLOR(c, ppeek(current_tableu)) &&
             PREVIOUS_RANK(c, ppeek(current_tableu)))));
 }
@@ -146,7 +146,7 @@ bool move_tableau_fundation(game_state_solitary *game, int tableau_index) {
   card_stack *current_tableau = &game->tableau[tableau_index];
   if (can_move_to_fundation(game, ppeek(current_tableau))) {
     card a = ppop(current_tableau);
-    if (!LAST_FROM_TABLEAU_IS_VISSIBLE(current_tableau) && !TABLEAU_IS_EMPTY(current_tableau)) {
+    if (!LAST_FROM_TABLEAU_IS_VISIBLE(current_tableau) && !TABLEAU_IS_EMPTY(current_tableau)) {
       (current_tableau->front)--;
     }
     push(a, &game->fundation[a.s]);
@@ -155,11 +155,13 @@ bool move_tableau_fundation(game_state_solitary *game, int tableau_index) {
   return false;
 }
 
-bool quick_fundation(game_state_solitary *game){
+bool quick_foundation(game_state_solitary *game){
   bool control, changed = false;
   do {
     control = false;
     if(move_window_fundation(game) == true){
+      control = true;
+      changed = true;
     }
     for(int index = 0; index < 7; index++){
       if(move_tableau_fundation(game,index) == true){
