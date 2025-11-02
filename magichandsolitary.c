@@ -154,3 +154,27 @@ bool move_tableau_fundation(game_state_solitary *game, int tableau_index) {
   }
   return false;
 }
+
+bool quick_fundation(game_state_solitary *game){
+  bool control, changed = false;
+  do {
+    control = false;
+    if(move_window_fundation(game) == true){
+    }
+    for(int index = 0; index < 7; index++){
+      if(move_tableau_fundation(game,index) == true){
+      control = true;
+      changed = true;
+      }
+    }
+  } while (control);
+  return changed;
+}
+
+bool quick_tableau(game_state_solitary *game){
+  for(int index = 0; index < 7; index++){
+    if(move_window_tableau(game, index))
+      return true;
+  }
+  return false;
+}

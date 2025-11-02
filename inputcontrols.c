@@ -18,6 +18,9 @@ key_pressed get_keypressed() {
   case 'f':
   case 'F':
     return FUNDATION1;
+  case 't':
+  case 'T':
+    return QUICKTABLEAU;
   case '1':
     return TABLEAU1;
   case '2':

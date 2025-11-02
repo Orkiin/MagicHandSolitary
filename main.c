@@ -19,6 +19,17 @@ int main(void) {
       new_game(&game);
       show_game_state(&game);
       break;
+    case FUNDATION1:
+    case FUNDATION2:
+    case FUNDATION3:
+    case FUNDATION4:
+      quick_fundation(&game);
+      show_game_state(&game);
+      break;
+    case QUICKTABLEAU:
+      quick_tableau(&game);
+      show_game_state(&game);
+      break;
     case WINDOW:
       switch (get_keypressed()) {
       case FUNDATION1:
