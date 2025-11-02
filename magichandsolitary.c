@@ -5,13 +5,15 @@
 
 #define HAND_IS_EMPTY(game) COMPARE_EQ(qpeek(&game->hand), INVALID_CARD)
 #define WINDOW_IS_EMPTY(game) (game->window.number == 0)
+#define TABLEAU_IS_EMPTY(tableau) ((tableau)->number == 0)
 #define LAST_FROM_TABLEAU_IS_VISSIBLE(tableau)                                 \
   ((tableau)->front != (tableau)->number)
 
 void commit_changes_tableau(game_state_solitary *game) {
   for (int i = 0; i < 7; i++) {
-    if (!LAST_FROM_TABLEAU_IS_VISSIBLE(&(game->tableau[i]))) {
-      (game->tableau[i].front)--;
+    card_stack *current_tableau = &game->tableau[i];
+    if (!LAST_FROM_TABLEAU_IS_VISSIBLE(current_tableau) && !TABLEAU_IS_EMPTY(current_tableau)) {
+      (current_tableau->front)--;
     }
   }
 }
@@ -144,7 +146,7 @@ bool move_tableau_fundation(game_state_solitary *game, int tableau_index) {
   card_stack *current_tableau = &game->tableau[tableau_index];
   if (can_move_to_fundation(game, ppeek(current_tableau))) {
     card a = ppop(current_tableau);
-    if (!LAST_FROM_TABLEAU_IS_VISSIBLE(current_tableau)) {
+    if (!LAST_FROM_TABLEAU_IS_VISSIBLE(current_tableau) && !TABLEAU_IS_EMPTY(current_tableau)) {
       (current_tableau->front)--;
     }
     push(a, &game->fundation[a.s]);

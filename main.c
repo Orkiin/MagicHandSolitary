@@ -59,6 +59,7 @@ int main(void) {
       default:
         break;
       }
+      break;
     case TABLEAU1:
       switch (get_keypressed()) {
       case FUNDATION1:
@@ -75,6 +76,7 @@ int main(void) {
       default:
         break;
       }
+      break;
     case TABLEAU2:
       switch (get_keypressed()) {
       case FUNDATION1:
@@ -91,6 +93,7 @@ int main(void) {
       default:
         break;
       }
+      break;
     case TABLEAU3:
       switch (get_keypressed()) {
       case FUNDATION1:
@@ -107,6 +110,7 @@ int main(void) {
       default:
         break;
       }
+      break;
     case TABLEAU4:
       switch (get_keypressed()) {
       case FUNDATION1:
@@ -123,6 +127,7 @@ int main(void) {
       default:
         break;
       }
+      break;
     case TABLEAU5:
       switch (get_keypressed()) {
       case FUNDATION1:
@@ -139,6 +144,7 @@ int main(void) {
       default:
         break;
       }
+      break;
     case TABLEAU6:
       switch (get_keypressed()) {
       case FUNDATION1:
@@ -155,6 +161,7 @@ int main(void) {
       default:
         break;
       }
+      break;
     case TABLEAU7:
       switch (get_keypressed()) {
       case FUNDATION1:
@@ -171,6 +178,7 @@ int main(void) {
       default:
         break;
       }
+      break;
     default:
       continue;
     }
