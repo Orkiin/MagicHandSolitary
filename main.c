@@ -1,7 +1,22 @@
+#include "generalcontainer.h"
 #include "inputcontrols.h"
 #include "magichandsolitary.h"
 #include "uiterm.h"
 #include <stdlib.h>
+
+TEMPLATEGENERALCONTAINER(game_state_solitary);
+TEMPLATERESULTERRORAWARE(game_state_solitary);
+TEMPLATEOPTION(game_state_solitary);
+TEMPLATEPUSHEND(game_state_solitary)
+TEMPLATEPUSHEND_OPT(game_state_solitary)
+TEMPLATESTACKPOP(game_state_solitary)
+TEMPLATESTACKPOP_OPT(game_state_solitary)
+TEMPLATESTACKPOP_UNSAFE(game_state_solitary)
+TEMPLATESTACKPEEK(game_state_solitary)
+TEMPLATESTACKPEEK_OPT(game_state_solitary)
+TEMPLATESTACKPEEK_UNSAFE(game_state_solitary)
+TEMPLATEQUEUEPOP(game_state_solitary)
+TEMPLATEQUEUEPOP_OPT(game_state_solitary)
 
 int main(void) {
   setup();
