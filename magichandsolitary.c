@@ -103,6 +103,7 @@ bool move_window_fundation(game_state_solitary *game) {
 bool move_window_tableau(game_state_solitary *game, int tableau_index) {
   if (can_move_to_tableau(game, qpeek(&game->window), tableau_index)) {
     push(qpop(&game->window), &game->tableau[tableau_index]);
+    if((&game->tableau[tableau_index])->number == 1) game->tableau[tableau_index].front=0;
     if (WINDOW_IS_EMPTY(game)) {
       push(ppop(&game->waste), &game->window);
     }
@@ -151,6 +152,23 @@ bool move_tableau_fundation(game_state_solitary *game, int tableau_index) {
     }
     push(a, &game->fundation[a.s]);
     return true;
+  }
+  return false;
+}
+
+bool move_tableau_tableau(game_state_solitary *game, int tableau_index1, int tableau_index2){
+  card_stack *tableau1 = &game->tableau[tableau_index1];
+  for( int ind = tableau1->front; ind < tableau1->rear; ind++){
+    if(can_move_to_tableau(game,tableau1->cards[ind], tableau_index2)){
+      card_stack temp = INIT_STACK(13);
+      for( int cards = tableau1->rear; cards > ind; cards--){
+        push(ppop(tableau1), &temp);
+      }
+      if(!TABLEAU_IS_EMPTY(tableau1)) tableau1->front--;
+      while(temp.number)
+        push(ppop(&temp),&game->tableau[tableau_index2]);
+      return true;
+    }
   }
   return false;
 }

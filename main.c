@@ -99,6 +99,30 @@ int main(void) {
         move_tableau_hand(&game, 0);
         show_game_state(&game);
         break;
+      case TABLEAU2:
+        move_tableau_tableau(&game,0,1);
+        show_game_state(&game);
+        break;
+      case TABLEAU3:
+        move_tableau_tableau(&game,0,2);
+        show_game_state(&game);
+        break;
+      case TABLEAU4:
+        move_tableau_tableau(&game,0,3);
+        show_game_state(&game);
+        break;
+      case TABLEAU5:
+        move_tableau_tableau(&game,0,4);
+        show_game_state(&game);
+        break;
+      case TABLEAU6:
+        move_tableau_tableau(&game,0,5);
+        show_game_state(&game);
+        break;
+      case TABLEAU7:
+        move_tableau_tableau(&game,0,6);
+        show_game_state(&game);
+        break;
       default:
         break;
       }
@@ -114,6 +138,30 @@ int main(void) {
         break;
       case HAND:
         move_tableau_hand(&game, 1);
+        show_game_state(&game);
+        break;
+      case TABLEAU1:
+        move_tableau_tableau(&game,1,0);
+        show_game_state(&game);
+        break;
+      case TABLEAU3:
+        move_tableau_tableau(&game,1,2);
+        show_game_state(&game);
+        break;
+      case TABLEAU4:
+        move_tableau_tableau(&game,1,3);
+        show_game_state(&game);
+        break;
+      case TABLEAU5:
+        move_tableau_tableau(&game,1,4);
+        show_game_state(&game);
+        break;
+      case TABLEAU6:
+        move_tableau_tableau(&game,1,5);
+        show_game_state(&game);
+        break;
+      case TABLEAU7:
+        move_tableau_tableau(&game,1,6);
         show_game_state(&game);
         break;
       default:
@@ -133,6 +181,30 @@ int main(void) {
         move_tableau_hand(&game, 2);
         show_game_state(&game);
         break;
+      case TABLEAU1:
+        move_tableau_tableau(&game,2,0);
+        show_game_state(&game);
+        break;
+      case TABLEAU2:
+        move_tableau_tableau(&game,2,1);
+        show_game_state(&game);
+        break;
+      case TABLEAU4:
+        move_tableau_tableau(&game,2,3);
+        show_game_state(&game);
+        break;
+      case TABLEAU5:
+        move_tableau_tableau(&game,2,4);
+        show_game_state(&game);
+        break;
+      case TABLEAU6:
+        move_tableau_tableau(&game,2,5);
+        show_game_state(&game);
+        break;
+      case TABLEAU7:
+        move_tableau_tableau(&game,2,6);
+        show_game_state(&game);
+        break;
       default:
         break;
       }
@@ -148,6 +220,30 @@ int main(void) {
         break;
       case HAND:
         move_tableau_hand(&game, 3);
+        show_game_state(&game);
+        break;
+      case TABLEAU1:
+        move_tableau_tableau(&game,3,0);
+        show_game_state(&game);
+        break;
+      case TABLEAU2:
+        move_tableau_tableau(&game,3,1);
+        show_game_state(&game);
+        break;
+      case TABLEAU3:
+        move_tableau_tableau(&game,3,2);
+        show_game_state(&game);
+        break;
+      case TABLEAU5:
+        move_tableau_tableau(&game,3,4);
+        show_game_state(&game);
+        break;
+      case TABLEAU6:
+        move_tableau_tableau(&game,3,5);
+        show_game_state(&game);
+        break;
+      case TABLEAU7:
+        move_tableau_tableau(&game,3,6);
         show_game_state(&game);
         break;
       default:
@@ -167,6 +263,30 @@ int main(void) {
         move_tableau_hand(&game, 4);
         show_game_state(&game);
         break;
+      case TABLEAU1:
+        move_tableau_tableau(&game,4,0);
+        show_game_state(&game);
+        break;
+      case TABLEAU2:
+        move_tableau_tableau(&game,4,1);
+        show_game_state(&game);
+        break;
+      case TABLEAU3:
+        move_tableau_tableau(&game,4,2);
+        show_game_state(&game);
+        break;
+      case TABLEAU4:
+        move_tableau_tableau(&game,4,3);
+        show_game_state(&game);
+        break;
+      case TABLEAU6:
+        move_tableau_tableau(&game,4,5);
+        show_game_state(&game);
+        break;
+      case TABLEAU7:
+        move_tableau_tableau(&game,4,6);
+        show_game_state(&game);
+        break;
       default:
         break;
       }
@@ -184,6 +304,30 @@ int main(void) {
         move_tableau_hand(&game, 5);
         show_game_state(&game);
         break;
+      case TABLEAU1:
+        move_tableau_tableau(&game,5,0);
+        show_game_state(&game);
+        break;
+      case TABLEAU2:
+        move_tableau_tableau(&game,5,1);
+        show_game_state(&game);
+        break;
+      case TABLEAU3:
+        move_tableau_tableau(&game,5,2);
+        show_game_state(&game);
+        break;
+      case TABLEAU4:
+        move_tableau_tableau(&game,5,3);
+        show_game_state(&game);
+        break;
+      case TABLEAU5:
+        move_tableau_tableau(&game,5,4);
+        show_game_state(&game);
+        break;
+      case TABLEAU7:
+        move_tableau_tableau(&game,5,6);
+        show_game_state(&game);
+        break;
       default:
         break;
       }
@@ -199,6 +343,30 @@ int main(void) {
         break;
       case HAND:
         move_tableau_hand(&game, 6);
+        show_game_state(&game);
+        break;
+      case TABLEAU1:
+        move_tableau_tableau(&game,6,0);
+        show_game_state(&game);
+        break;
+      case TABLEAU2:
+        move_tableau_tableau(&game,6,1);
+        show_game_state(&game);
+        break;
+      case TABLEAU3:
+        move_tableau_tableau(&game,6,2);
+        show_game_state(&game);
+        break;
+      case TABLEAU4:
+        move_tableau_tableau(&game,6,3);
+        show_game_state(&game);
+        break;
+      case TABLEAU5:
+        move_tableau_tableau(&game,6,4);
+        show_game_state(&game);
+        break;
+      case TABLEAU6:
+        move_tableau_tableau(&game,6,5);
         show_game_state(&game);
         break;
       default:

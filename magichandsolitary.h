@@ -28,6 +28,7 @@ bool move_window_hand(game_state_solitary *game);
 bool move_hand_tableau(game_state_solitary *game, int tableau_index);
 bool move_tableau_hand(game_state_solitary *game, int tableau_index);
 bool move_tableau_fundation(game_state_solitary *game, int tableau_index);
+bool move_tableau_tableau(game_state_solitary *game, int tableau_index1, int tableau_index2);
 bool quick_foundation(game_state_solitary *game);
 bool quick_tableau(game_state_solitary *game);
 
