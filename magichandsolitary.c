@@ -43,7 +43,6 @@ bool new_game(game_state_solitary *game) {
       game->tableau[t].front = t;
     }
   }
-  float percentage = 0.0;
   for (card a = ppop(&deck); !COMPARE_EQ(INVALID_CARD, a); a = ppop(&deck)) {
     if (push(a, &(game->stock)))
       return false;
@@ -70,12 +69,13 @@ void draw_stock(game_state_solitary *game) {
 }
 
 int can_move_to_fundation(game_state_solitary *game, card c) {
+  if(COMPARE_EQ(c, INVALID_CARD)) return 0;
   card last = ppeek(&game->fundation[c.s]);
   return NEXT_RANK(c, last);
 }
 
 int can_move_to_hand(game_state_solitary *game, card c) {
-  card in_hand = qpeek(&game->hand);
+  card in_hand = ppeek(&game->hand);
   return HAND_IS_EMPTY(game) ||
          (DIFFERENT_COLOR(c, in_hand) && NEXT_RANK(c, in_hand));
 }
@@ -158,18 +158,18 @@ bool move_tableau_fundation(game_state_solitary *game, int tableau_index) {
 
 bool move_tableau_tableau(game_state_solitary *game, int tableau_index1, int tableau_index2){
   card_stack *tableau1 = &game->tableau[tableau_index1];
-  for( int ind = tableau1->front; ind < tableau1->rear; ind++){
-    if(can_move_to_tableau(game,tableau1->cards[ind], tableau_index2)){
-      card_stack temp = INIT_STACK(13);
-      for( int cards = tableau1->rear; cards > ind; cards--){
-        push(ppop(tableau1), &temp);
-      }
-      if(!TABLEAU_IS_EMPTY(tableau1)) tableau1->front--;
-      while(temp.number)
-        push(ppop(&temp),&game->tableau[tableau_index2]);
-      return true;
+  game_state_solitary bkup = *game;
+  while(
+      !TABLEAU_IS_EMPTY(tableau1) &&
+      LAST_FROM_TABLEAU_IS_VISIBLE(tableau1) &&
+      can_move_to_hand(game, ppeek(tableau1))
+      ){
+    push(ppop(tableau1),&(game->hand));
+    if(can_move_to_tableau(game, ppeek(&(game->hand)),tableau_index2)){
+      return move_hand_tableau(game,tableau_index2);
     }
   }
+  *game = bkup;
   return false;
 }
 
