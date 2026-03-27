@@ -502,9 +502,12 @@ int main(void) {
     }
     if (i == 7 && STACK_IS_EMPTY(&(game.stock)) &&
         STACK_IS_EMPTY(&(game.stock))) {
-      printf("YOU WON!");
+      printf("YOU WON! Press 'N' to play a new game, any key to exit");
       fflush(stdout);
-      get_keypressed();
+      if(get_keypressed() == RESET){
+        restore();
+        return main();
+      }
       return EXIT_SUCCESS;
     }
   }
