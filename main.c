@@ -413,6 +413,16 @@ int main(void) {
     default:
       continue;
     }
+    int i;
+    for(i = 0; i < 7; i++){
+      if(!STACK_IS_EMPTY(&(game.tableau[i]))) break;
+    }
+    if( i == 7 && STACK_IS_EMPTY(&(game.stock)) && STACK_IS_EMPTY(&(game.stock))){ 
+      printf("YOU WON!");
+      fflush(stdout);
+      get_keypressed();
+      return EXIT_SUCCESS;
+    } 
   }
   return EXIT_SUCCESS;
 }
