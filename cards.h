@@ -43,6 +43,7 @@
   (IS_RED_SUIT((a).s) * IS_RED_SUIT((b).s) ||                                  \
    IS_BLACK_SUIT((a).s) * IS_BLACK_SUIT((b).s))
 #define DIFFERENT_COLOR(a, b) !SAME_COLOR((a), (b))
+#define STACK_IS_EMPTY(card_stack) ((card_stack)->number == 0)
 
 typedef enum {
   UNSUITABLE = -1,

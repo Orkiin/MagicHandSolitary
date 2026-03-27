@@ -3,9 +3,9 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#define HAND_IS_EMPTY(game) COMPARE_EQ(qpeek(&game->hand), INVALID_CARD)
-#define WINDOW_IS_EMPTY(game) (game->window.number == 0)
-#define TABLEAU_IS_EMPTY(tableau) ((tableau)->number == 0)
+#define HAND_IS_EMPTY(game) STACK_IS_EMPTY(&game->hand)
+#define WINDOW_IS_EMPTY(game) STACK_IS_EMPTY(&game->window)
+#define TABLEAU_IS_EMPTY STACK_IS_EMPTY
 #define LAST_FROM_TABLEAU_IS_VISIBLE(tableau)                                 \
   ((tableau)->front != (tableau)->number)
 
