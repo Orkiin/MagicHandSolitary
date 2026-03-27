@@ -91,6 +91,7 @@ int main(void) {
         default:
           break;
       }
+      break;
     case QUICKTABLEAU:
       quick_tableau(&game);
       show_game_state(&game);
