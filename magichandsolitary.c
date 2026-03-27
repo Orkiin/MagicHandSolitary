@@ -173,6 +173,21 @@ bool move_tableau_tableau(game_state_solitary *game, int tableau_index1, int tab
   return false;
 }
 
+bool move_foundation_tableau(game_state_solitary *game, int tableau_index){
+  card_stack *tab = &(game->tableau[tableau_index]);
+  if(TABLEAU_IS_EMPTY(tab)) return false;
+  for(suit s = SPADES; s > UNSUITABLE; s--){
+    card fund = ppeek(&(game->fundation[s]));
+    printf("%d/n",s);
+    if(COMPARE_EQ(fund, INVALID_CARD)) continue;
+    if(can_move_to_tableau(game,fund,tableau_index)){
+      push(ppop(&(game->fundation[s])),tab);
+    }
+    return true;
+  }
+  return false;
+}
+
 bool quick_foundation(game_state_solitary *game){
   bool control, changed = false;
   do {

@@ -38,9 +38,45 @@ int main(void) {
     case FUNDATION2:
     case FUNDATION3:
     case FUNDATION4:
-      quick_foundation(&game);
-      show_game_state(&game);
-      break;
+      switch(get_keypressed()){
+        case TABLEAU1:
+          move_foundation_tableau(&game,0);
+          show_game_state(&game);
+          break;
+        case TABLEAU2:
+          move_foundation_tableau(&game,1);
+          show_game_state(&game);
+          break;
+        case TABLEAU3:
+          move_foundation_tableau(&game,2);
+          show_game_state(&game);
+          break;
+        case TABLEAU4:
+          move_foundation_tableau(&game,3);
+          show_game_state(&game);
+          break;
+        case TABLEAU5:
+          move_foundation_tableau(&game,4);
+          show_game_state(&game);
+          break;
+        case TABLEAU6:
+          move_foundation_tableau(&game,5);
+          show_game_state(&game);
+          break;
+        case TABLEAU7:
+          move_foundation_tableau(&game,6);
+          show_game_state(&game);
+          break;
+        case FUNDATION1:
+        case FUNDATION2:
+        case FUNDATION3:
+        case FUNDATION4:
+          quick_foundation(&game);
+          show_game_state(&game);
+          break;
+        default:
+          break;
+      }
     case QUICKTABLEAU:
       quick_tableau(&game);
       show_game_state(&game);
