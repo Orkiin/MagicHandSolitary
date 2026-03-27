@@ -54,7 +54,7 @@ typedef enum {
 
 #define TEMPLATESTACKPOP_OPT(type)                                             \
   TEMPLATETYPEOPTION(type)                                                     \
-  ppop_##type##_opt(TEMPLATETYPENAME(type) * container) {                        \
+  ppop_##type##_opt(TEMPLATETYPENAME(type) * container) {                      \
     if (container->number == 0) {                                              \
       return (TEMPLATETYPEOPTION(type)){.option = OPT_NONE, 0};                \
     }                                                                          \

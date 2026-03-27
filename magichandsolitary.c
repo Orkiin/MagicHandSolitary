@@ -6,13 +6,14 @@
 #define HAND_IS_EMPTY(game) STACK_IS_EMPTY(&game->hand)
 #define WINDOW_IS_EMPTY(game) STACK_IS_EMPTY(&game->window)
 #define TABLEAU_IS_EMPTY STACK_IS_EMPTY
-#define LAST_FROM_TABLEAU_IS_VISIBLE(tableau)                                 \
+#define LAST_FROM_TABLEAU_IS_VISIBLE(tableau)                                  \
   ((tableau)->front != (tableau)->number)
 
 void commit_changes_tableau(game_state_solitary *game) {
   for (int i = 0; i < 7; i++) {
     card_stack *current_tableau = &game->tableau[i];
-    if (!LAST_FROM_TABLEAU_IS_VISIBLE(current_tableau) && !TABLEAU_IS_EMPTY(current_tableau)) {
+    if (!LAST_FROM_TABLEAU_IS_VISIBLE(current_tableau) &&
+        !TABLEAU_IS_EMPTY(current_tableau)) {
       (current_tableau->front)--;
     }
   }
@@ -69,7 +70,8 @@ void draw_stock(game_state_solitary *game) {
 }
 
 int can_move_to_fundation(game_state_solitary *game, card c) {
-  if(COMPARE_EQ(c, INVALID_CARD)) return 0;
+  if (COMPARE_EQ(c, INVALID_CARD))
+    return 0;
   card last = ppeek(&game->fundation[c.s]);
   return NEXT_RANK(c, last);
 }
@@ -103,7 +105,8 @@ bool move_window_fundation(game_state_solitary *game) {
 bool move_window_tableau(game_state_solitary *game, int tableau_index) {
   if (can_move_to_tableau(game, qpeek(&game->window), tableau_index)) {
     push(qpop(&game->window), &game->tableau[tableau_index]);
-    if((&game->tableau[tableau_index])->number == 1) game->tableau[tableau_index].front=0;
+    if ((&game->tableau[tableau_index])->number == 1)
+      game->tableau[tableau_index].front = 0;
     if (WINDOW_IS_EMPTY(game)) {
       push(ppop(&game->waste), &game->window);
     }
@@ -147,7 +150,8 @@ bool move_tableau_fundation(game_state_solitary *game, int tableau_index) {
   card_stack *current_tableau = &game->tableau[tableau_index];
   if (can_move_to_fundation(game, ppeek(current_tableau))) {
     card a = ppop(current_tableau);
-    if (!LAST_FROM_TABLEAU_IS_VISIBLE(current_tableau) && !TABLEAU_IS_EMPTY(current_tableau)) {
+    if (!LAST_FROM_TABLEAU_IS_VISIBLE(current_tableau) &&
+        !TABLEAU_IS_EMPTY(current_tableau)) {
       (current_tableau->front)--;
     }
     push(a, &game->fundation[a.s]);
@@ -156,62 +160,61 @@ bool move_tableau_fundation(game_state_solitary *game, int tableau_index) {
   return false;
 }
 
-bool move_tableau_tableau(game_state_solitary *game, int tableau_index1, int tableau_index2){
+bool move_tableau_tableau(game_state_solitary *game, int tableau_index1,
+                          int tableau_index2) {
   card_stack *tableau1 = &game->tableau[tableau_index1];
   game_state_solitary bkup = *game;
-  while(
-      !TABLEAU_IS_EMPTY(tableau1) &&
-      LAST_FROM_TABLEAU_IS_VISIBLE(tableau1) &&
-      can_move_to_hand(game, ppeek(tableau1))
-      ){
-    push(ppop(tableau1),&(game->hand));
-    if(can_move_to_tableau(game, ppeek(&(game->hand)),tableau_index2)){
-      return move_hand_tableau(game,tableau_index2);
+  while (!TABLEAU_IS_EMPTY(tableau1) &&
+         LAST_FROM_TABLEAU_IS_VISIBLE(tableau1) &&
+         can_move_to_hand(game, ppeek(tableau1))) {
+    push(ppop(tableau1), &(game->hand));
+    if (can_move_to_tableau(game, ppeek(&(game->hand)), tableau_index2)) {
+      return move_hand_tableau(game, tableau_index2);
     }
   }
   *game = bkup;
   return false;
 }
 
-bool move_foundation_tableau(game_state_solitary *game, suit fundation_suit, int tableau_index){
+bool move_foundation_tableau(game_state_solitary *game, suit fundation_suit,
+                             int tableau_index) {
   card_stack *tab = &(game->tableau[tableau_index]);
-  card_stack *fun = &(game->fundation[fundation_suit]); 
-  if(STACK_IS_EMPTY(fun)) return false;
-  if(
-      TABLEAU_IS_EMPTY(tab) && 
-      (ppeek(fun).r != K)
-    )
+  card_stack *fun = &(game->fundation[fundation_suit]);
+  if (STACK_IS_EMPTY(fun))
+    return false;
+  if (TABLEAU_IS_EMPTY(tab) && (ppeek(fun).r != K))
     return false;
   card fund = ppeek(&(game->fundation[fundation_suit]));
-  if(COMPARE_EQ(fund, INVALID_CARD)) return false;
-  if(can_move_to_tableau(game,fund,tableau_index)){
-    push(ppop(&(game->fundation[fundation_suit])),tab);
+  if (COMPARE_EQ(fund, INVALID_CARD))
+    return false;
+  if (can_move_to_tableau(game, fund, tableau_index)) {
+    push(ppop(&(game->fundation[fundation_suit])), tab);
     return true;
   }
   return false;
 }
 
-bool quick_foundation(game_state_solitary *game){
+bool quick_foundation(game_state_solitary *game) {
   bool control, changed = false;
   do {
     control = false;
-    if(move_window_fundation(game) == true){
+    if (move_window_fundation(game) == true) {
       control = true;
       changed = true;
     }
-    for(int index = 0; index < 7; index++){
-      if(move_tableau_fundation(game,index) == true){
-      control = true;
-      changed = true;
+    for (int index = 0; index < 7; index++) {
+      if (move_tableau_fundation(game, index) == true) {
+        control = true;
+        changed = true;
       }
     }
   } while (control);
   return changed;
 }
 
-bool quick_tableau(game_state_solitary *game){
-  for(int index = 0; index < 7; index++){
-    if(move_window_tableau(game, index))
+bool quick_tableau(game_state_solitary *game) {
+  for (int index = 0; index < 7; index++) {
+    if (move_window_tableau(game, index))
       return true;
   }
   return false;

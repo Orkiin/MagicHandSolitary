@@ -15,7 +15,6 @@
 #define CLEAR_SCREEN ESCAPESECUENCE "2J"
 #define BUFFER_HOME ESCAPESECUENCE "H"
 
-
 #define NORMAL_BG ESCAPESECUENCE "47m"
 #define SELECTED_BG ESCAPESECUENCE "44m"
 #define COLOR_RED ESCAPESECUENCE "31m"
@@ -26,7 +25,7 @@
 
 static struct termios original_termios;
 
-void restore() { 
+void restore() {
   tcsetattr(STDIN_FILENO, TCSAFLUSH, &original_termios);
   printf(SHOW_CURSOR);
   printf(ORIGINAL_BUFFER);

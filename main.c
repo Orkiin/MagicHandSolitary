@@ -21,62 +21,144 @@ int main(void) {
       return main();
       break;
     case FUNDATION1:
-    case FUNDATION2:
-    case FUNDATION3:
-    case FUNDATION4:
-      switch(get_keypressed()){
-        case TABLEAU1:
-          for(int s = 0; s < 4; s++){
-            if(move_foundation_tableau(&game ,s ,0)) break;
-          }
+      switch (get_keypressed()) {
+      case TABLEAU1:
+        if (move_foundation_tableau(&game, 0, 0))
           show_game_state(&game);
-          break;
-        case TABLEAU2:
-          for(int s = 0; s < 4; s++){
-            if(move_foundation_tableau(&game ,s ,1)) break;
-          }
+        break;
+      case TABLEAU2:
+        if (move_foundation_tableau(&game, 0, 1))
           show_game_state(&game);
-          break;
-        case TABLEAU3:
-          for(int s = 0; s < 4; s++){
-            if(move_foundation_tableau(&game ,s ,2)) break;
-          }
+        break;
+      case TABLEAU3:
+        if (move_foundation_tableau(&game, 0, 2))
           show_game_state(&game);
-          break;
-        case TABLEAU4:
-          for(int s = 0; s < 4; s++){
-            if(move_foundation_tableau(&game ,s ,3)) break;
-          }
+        break;
+      case TABLEAU4:
+        if (move_foundation_tableau(&game, 0, 3))
           show_game_state(&game);
-          break;
-        case TABLEAU5:
-          for(int s = 0; s < 4; s++){
-            if(move_foundation_tableau(&game ,s ,4)) break;
-          }
+        break;
+      case TABLEAU5:
+        if (move_foundation_tableau(&game, 0, 4))
           show_game_state(&game);
-          break;
-        case TABLEAU6:
-          for(int s = 0; s < 4; s++){
-            if(move_foundation_tableau(&game ,s ,5)) break;
-          }
+        break;
+      case TABLEAU6:
+        if (move_foundation_tableau(&game, 0, 5))
           show_game_state(&game);
-          break;
-        case TABLEAU7:
-          for(int s = 0; s < 4; s++){
-            if(move_foundation_tableau(&game ,s ,6)) break;
-          }
+        break;
+      case TABLEAU7:
+        if (move_foundation_tableau(&game, 0, 6))
           show_game_state(&game);
-          break;
-        case FUNDATION1:
-        case FUNDATION2:
-        case FUNDATION3:
-        case FUNDATION4:
-          quick_foundation(&game);
-          show_game_state(&game);
-          break;
-        default:
-          break;
+        break;
+      default:
+        break;
       }
+      break;
+    case FUNDATION2:
+      switch (get_keypressed()) {
+      case TABLEAU1:
+        if (move_foundation_tableau(&game, 1, 0))
+          show_game_state(&game);
+        break;
+      case TABLEAU2:
+        if (move_foundation_tableau(&game, 1, 1))
+          show_game_state(&game);
+        break;
+      case TABLEAU3:
+        if (move_foundation_tableau(&game, 1, 2))
+          show_game_state(&game);
+        break;
+      case TABLEAU4:
+        if (move_foundation_tableau(&game, 1, 3))
+          show_game_state(&game);
+        break;
+      case TABLEAU5:
+        if (move_foundation_tableau(&game, 1, 4))
+          show_game_state(&game);
+        break;
+      case TABLEAU6:
+        if (move_foundation_tableau(&game, 1, 5))
+          show_game_state(&game);
+        break;
+      case TABLEAU7:
+        if (move_foundation_tableau(&game, 1, 6))
+          show_game_state(&game);
+        break;
+      default:
+        break;
+      }
+      break;
+    case FUNDATION3:
+      switch (get_keypressed()) {
+      case TABLEAU1:
+        if (move_foundation_tableau(&game, 2, 0))
+          show_game_state(&game);
+        break;
+      case TABLEAU2:
+        if (move_foundation_tableau(&game, 2, 1))
+          show_game_state(&game);
+        break;
+      case TABLEAU3:
+        if (move_foundation_tableau(&game, 2, 2))
+          show_game_state(&game);
+        break;
+      case TABLEAU4:
+        if (move_foundation_tableau(&game, 2, 3))
+          show_game_state(&game);
+        break;
+      case TABLEAU5:
+        if (move_foundation_tableau(&game, 2, 4))
+          show_game_state(&game);
+        break;
+      case TABLEAU6:
+        if (move_foundation_tableau(&game, 2, 5))
+          show_game_state(&game);
+        break;
+      case TABLEAU7:
+        if (move_foundation_tableau(&game, 2, 6))
+          show_game_state(&game);
+        break;
+      default:
+        break;
+      }
+      break;
+    case FUNDATION4:
+      switch (get_keypressed()) {
+      case TABLEAU1:
+        if (move_foundation_tableau(&game, 3, 0))
+          show_game_state(&game);
+        break;
+      case TABLEAU2:
+        if (move_foundation_tableau(&game, 3, 1))
+          show_game_state(&game);
+        break;
+      case TABLEAU3:
+        if (move_foundation_tableau(&game, 3, 2))
+          show_game_state(&game);
+        break;
+      case TABLEAU4:
+        if (move_foundation_tableau(&game, 3, 3))
+          show_game_state(&game);
+        break;
+      case TABLEAU5:
+        if (move_foundation_tableau(&game, 3, 4))
+          show_game_state(&game);
+        break;
+      case TABLEAU6:
+        if (move_foundation_tableau(&game, 3, 5))
+          show_game_state(&game);
+        break;
+      case TABLEAU7:
+        if (move_foundation_tableau(&game, 3, 6))
+          show_game_state(&game);
+        break;
+      default:
+        break;
+      }
+      break;
+    case QUICKFUNDATION:
+      quick_foundation(&game);
+      show_game_state(&game);
       break;
     case QUICKTABLEAU:
       quick_tableau(&game);
@@ -137,27 +219,27 @@ int main(void) {
         show_game_state(&game);
         break;
       case TABLEAU2:
-        move_tableau_tableau(&game,0,1);
+        move_tableau_tableau(&game, 0, 1);
         show_game_state(&game);
         break;
       case TABLEAU3:
-        move_tableau_tableau(&game,0,2);
+        move_tableau_tableau(&game, 0, 2);
         show_game_state(&game);
         break;
       case TABLEAU4:
-        move_tableau_tableau(&game,0,3);
+        move_tableau_tableau(&game, 0, 3);
         show_game_state(&game);
         break;
       case TABLEAU5:
-        move_tableau_tableau(&game,0,4);
+        move_tableau_tableau(&game, 0, 4);
         show_game_state(&game);
         break;
       case TABLEAU6:
-        move_tableau_tableau(&game,0,5);
+        move_tableau_tableau(&game, 0, 5);
         show_game_state(&game);
         break;
       case TABLEAU7:
-        move_tableau_tableau(&game,0,6);
+        move_tableau_tableau(&game, 0, 6);
         show_game_state(&game);
         break;
       default:
@@ -178,27 +260,27 @@ int main(void) {
         show_game_state(&game);
         break;
       case TABLEAU1:
-        move_tableau_tableau(&game,1,0);
+        move_tableau_tableau(&game, 1, 0);
         show_game_state(&game);
         break;
       case TABLEAU3:
-        move_tableau_tableau(&game,1,2);
+        move_tableau_tableau(&game, 1, 2);
         show_game_state(&game);
         break;
       case TABLEAU4:
-        move_tableau_tableau(&game,1,3);
+        move_tableau_tableau(&game, 1, 3);
         show_game_state(&game);
         break;
       case TABLEAU5:
-        move_tableau_tableau(&game,1,4);
+        move_tableau_tableau(&game, 1, 4);
         show_game_state(&game);
         break;
       case TABLEAU6:
-        move_tableau_tableau(&game,1,5);
+        move_tableau_tableau(&game, 1, 5);
         show_game_state(&game);
         break;
       case TABLEAU7:
-        move_tableau_tableau(&game,1,6);
+        move_tableau_tableau(&game, 1, 6);
         show_game_state(&game);
         break;
       default:
@@ -219,27 +301,27 @@ int main(void) {
         show_game_state(&game);
         break;
       case TABLEAU1:
-        move_tableau_tableau(&game,2,0);
+        move_tableau_tableau(&game, 2, 0);
         show_game_state(&game);
         break;
       case TABLEAU2:
-        move_tableau_tableau(&game,2,1);
+        move_tableau_tableau(&game, 2, 1);
         show_game_state(&game);
         break;
       case TABLEAU4:
-        move_tableau_tableau(&game,2,3);
+        move_tableau_tableau(&game, 2, 3);
         show_game_state(&game);
         break;
       case TABLEAU5:
-        move_tableau_tableau(&game,2,4);
+        move_tableau_tableau(&game, 2, 4);
         show_game_state(&game);
         break;
       case TABLEAU6:
-        move_tableau_tableau(&game,2,5);
+        move_tableau_tableau(&game, 2, 5);
         show_game_state(&game);
         break;
       case TABLEAU7:
-        move_tableau_tableau(&game,2,6);
+        move_tableau_tableau(&game, 2, 6);
         show_game_state(&game);
         break;
       default:
@@ -260,27 +342,27 @@ int main(void) {
         show_game_state(&game);
         break;
       case TABLEAU1:
-        move_tableau_tableau(&game,3,0);
+        move_tableau_tableau(&game, 3, 0);
         show_game_state(&game);
         break;
       case TABLEAU2:
-        move_tableau_tableau(&game,3,1);
+        move_tableau_tableau(&game, 3, 1);
         show_game_state(&game);
         break;
       case TABLEAU3:
-        move_tableau_tableau(&game,3,2);
+        move_tableau_tableau(&game, 3, 2);
         show_game_state(&game);
         break;
       case TABLEAU5:
-        move_tableau_tableau(&game,3,4);
+        move_tableau_tableau(&game, 3, 4);
         show_game_state(&game);
         break;
       case TABLEAU6:
-        move_tableau_tableau(&game,3,5);
+        move_tableau_tableau(&game, 3, 5);
         show_game_state(&game);
         break;
       case TABLEAU7:
-        move_tableau_tableau(&game,3,6);
+        move_tableau_tableau(&game, 3, 6);
         show_game_state(&game);
         break;
       default:
@@ -301,27 +383,27 @@ int main(void) {
         show_game_state(&game);
         break;
       case TABLEAU1:
-        move_tableau_tableau(&game,4,0);
+        move_tableau_tableau(&game, 4, 0);
         show_game_state(&game);
         break;
       case TABLEAU2:
-        move_tableau_tableau(&game,4,1);
+        move_tableau_tableau(&game, 4, 1);
         show_game_state(&game);
         break;
       case TABLEAU3:
-        move_tableau_tableau(&game,4,2);
+        move_tableau_tableau(&game, 4, 2);
         show_game_state(&game);
         break;
       case TABLEAU4:
-        move_tableau_tableau(&game,4,3);
+        move_tableau_tableau(&game, 4, 3);
         show_game_state(&game);
         break;
       case TABLEAU6:
-        move_tableau_tableau(&game,4,5);
+        move_tableau_tableau(&game, 4, 5);
         show_game_state(&game);
         break;
       case TABLEAU7:
-        move_tableau_tableau(&game,4,6);
+        move_tableau_tableau(&game, 4, 6);
         show_game_state(&game);
         break;
       default:
@@ -342,27 +424,27 @@ int main(void) {
         show_game_state(&game);
         break;
       case TABLEAU1:
-        move_tableau_tableau(&game,5,0);
+        move_tableau_tableau(&game, 5, 0);
         show_game_state(&game);
         break;
       case TABLEAU2:
-        move_tableau_tableau(&game,5,1);
+        move_tableau_tableau(&game, 5, 1);
         show_game_state(&game);
         break;
       case TABLEAU3:
-        move_tableau_tableau(&game,5,2);
+        move_tableau_tableau(&game, 5, 2);
         show_game_state(&game);
         break;
       case TABLEAU4:
-        move_tableau_tableau(&game,5,3);
+        move_tableau_tableau(&game, 5, 3);
         show_game_state(&game);
         break;
       case TABLEAU5:
-        move_tableau_tableau(&game,5,4);
+        move_tableau_tableau(&game, 5, 4);
         show_game_state(&game);
         break;
       case TABLEAU7:
-        move_tableau_tableau(&game,5,6);
+        move_tableau_tableau(&game, 5, 6);
         show_game_state(&game);
         break;
       default:
@@ -383,27 +465,27 @@ int main(void) {
         show_game_state(&game);
         break;
       case TABLEAU1:
-        move_tableau_tableau(&game,6,0);
+        move_tableau_tableau(&game, 6, 0);
         show_game_state(&game);
         break;
       case TABLEAU2:
-        move_tableau_tableau(&game,6,1);
+        move_tableau_tableau(&game, 6, 1);
         show_game_state(&game);
         break;
       case TABLEAU3:
-        move_tableau_tableau(&game,6,2);
+        move_tableau_tableau(&game, 6, 2);
         show_game_state(&game);
         break;
       case TABLEAU4:
-        move_tableau_tableau(&game,6,3);
+        move_tableau_tableau(&game, 6, 3);
         show_game_state(&game);
         break;
       case TABLEAU5:
-        move_tableau_tableau(&game,6,4);
+        move_tableau_tableau(&game, 6, 4);
         show_game_state(&game);
         break;
       case TABLEAU6:
-        move_tableau_tableau(&game,6,5);
+        move_tableau_tableau(&game, 6, 5);
         show_game_state(&game);
         break;
       default:
@@ -414,15 +496,17 @@ int main(void) {
       continue;
     }
     int i;
-    for(i = 0; i < 7; i++){
-      if(!STACK_IS_EMPTY(&(game.tableau[i]))) break;
+    for (i = 0; i < 7; i++) {
+      if (!STACK_IS_EMPTY(&(game.tableau[i])))
+        break;
     }
-    if( i == 7 && STACK_IS_EMPTY(&(game.stock)) && STACK_IS_EMPTY(&(game.stock))){ 
+    if (i == 7 && STACK_IS_EMPTY(&(game.stock)) &&
+        STACK_IS_EMPTY(&(game.stock))) {
       printf("YOU WON!");
       fflush(stdout);
       get_keypressed();
       return EXIT_SUCCESS;
-    } 
+    }
   }
   return EXIT_SUCCESS;
 }

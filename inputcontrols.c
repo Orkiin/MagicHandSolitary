@@ -7,8 +7,8 @@ key_pressed get_keypressed() {
   case 'q':
   case 'Q':
     return EXIT;
-  case 'r':
-  case 'R':
+  case 'n':
+  case 'N':
     return RESET;
   case ' ':
     return DRAW;
@@ -17,7 +17,19 @@ key_pressed get_keypressed() {
     return WINDOW;
   case 'f':
   case 'F':
+    return QUICKFUNDATION;
+  case 'z':
+  case 'Z':
     return FUNDATION1;
+  case 'x':
+  case 'X':
+    return FUNDATION2;
+  case 'c':
+  case 'C':
+    return FUNDATION3;
+  case 'v':
+  case 'V':
+    return FUNDATION4;
   case 't':
   case 'T':
     return QUICKTABLEAU;
