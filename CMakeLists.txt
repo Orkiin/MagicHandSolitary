@@ -5,4 +5,4 @@ set(CMAKE_BUILD_TYPE Debug)
 
 project(MagicHandSolitary)
 
-add_executable(main main.c cards.c magichandsolitary.c uiterm.c inputcontrols.c)
+add_executable(solitui main.c cards.c magichandsolitary.c uiterm.c inputcontrols.c)
