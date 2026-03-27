@@ -35,6 +35,9 @@ key_pressed get_keypressed() {
     return TABLEAU6;
   case '7':
     return TABLEAU7;
+  case 'U':
+  case 'u':
+    return UNDO;
   default:
     return UNDEFINED;
   }

@@ -4,9 +4,10 @@
 #include <unistd.h>
 
 typedef enum {
+  UNDEFINED = -2,
   EXIT = -1,
+  UNDO,
   RESET,
-  UNDEFINED,
   HAND,
   DRAW,
   WINDOW,
