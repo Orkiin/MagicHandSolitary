@@ -40,31 +40,45 @@ int main(void) {
     case FUNDATION4:
       switch(get_keypressed()){
         case TABLEAU1:
-          move_foundation_tableau(&game,0);
+          for(int s = 0; s < 4; s++){
+            if(move_foundation_tableau(&game ,s ,0)) break;
+          }
           show_game_state(&game);
           break;
         case TABLEAU2:
-          move_foundation_tableau(&game,1);
+          for(int s = 0; s < 4; s++){
+            if(move_foundation_tableau(&game ,s ,1)) break;
+          }
           show_game_state(&game);
           break;
         case TABLEAU3:
-          move_foundation_tableau(&game,2);
+          for(int s = 0; s < 4; s++){
+            if(move_foundation_tableau(&game ,s ,2)) break;
+          }
           show_game_state(&game);
           break;
         case TABLEAU4:
-          move_foundation_tableau(&game,3);
+          for(int s = 0; s < 4; s++){
+            if(move_foundation_tableau(&game ,s ,3)) break;
+          }
           show_game_state(&game);
           break;
         case TABLEAU5:
-          move_foundation_tableau(&game,4);
+          for(int s = 0; s < 4; s++){
+            if(move_foundation_tableau(&game ,s ,4)) break;
+          }
           show_game_state(&game);
           break;
         case TABLEAU6:
-          move_foundation_tableau(&game,5);
+          for(int s = 0; s < 4; s++){
+            if(move_foundation_tableau(&game ,s ,5)) break;
+          }
           show_game_state(&game);
           break;
         case TABLEAU7:
-          move_foundation_tableau(&game,6);
+          for(int s = 0; s < 4; s++){
+            if(move_foundation_tableau(&game ,s ,6)) break;
+          }
           show_game_state(&game);
           break;
         case FUNDATION1:
