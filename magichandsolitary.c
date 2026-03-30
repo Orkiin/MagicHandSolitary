@@ -51,7 +51,15 @@ bool new_game(game_state_solitary *game) {
   game->hand = (card_stack){.cards = (game->_hand), .capacity = 13, 0};
   game->stock = (card_stack){.cards = (game->_stock), .capacity = 24, 0};
   game->waste = (card_stack){.cards = (game->_waste), .capacity = 24, 0};
-  game->window = (card_stack){.cards = (game->_window), .capacity = 3, 0};
+  game->window = (card_stack){.cards = (game->_window), 0};
+  switch (game->dif) {
+  case EASY:
+    game->window.capacity = 1;
+    break;
+  case HARD:
+    game->window.capacity = 3;
+    break;
+  }
 
   card_stack deck = INIT_STACK(52);
   new_deck(&deck);

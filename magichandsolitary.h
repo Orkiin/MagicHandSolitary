@@ -24,19 +24,30 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "cards.h"
 #include <stdbool.h>
 
+typedef enum {
+  EASY,
+  HARD,
+} difficulty;
+
 typedef struct {
-  card _fundation[4][13];
+  union {
+    card *buffer;
+    struct {
+      card _fundation[4][13];
+      card _tableau[7][19];
+      card _stock[24];
+      card _waste[24];
+      card _window[3];
+      card _hand[13];
+    };
+  };
   card_stack fundation[4];
-  card _tableau[7][19];
   card_stack tableau[7];
-  card _stock[24];
   card_stack stock;
-  card _waste[24];
   card_stack waste;
-  card _window[3];
   card_stack window;
-  card _hand[13];
   card_stack hand;
+  difficulty dif;
   // TODO: cursor to navigate through the game
 } game_state_solitary;
 
