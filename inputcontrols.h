@@ -44,6 +44,11 @@ typedef enum {
   TABLEAU5,
   TABLEAU6,
   TABLEAU7,
+  ARROW_D,
+  ARROW_U,
+  ARROW_L,
+  ARROW_R,
+  ENTER,
 } key_pressed;
 
 key_pressed get_keypressed();

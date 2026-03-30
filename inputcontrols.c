@@ -20,10 +20,31 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #include "inputcontrols.h"
 
+key_pressed escaped_input() {
+  char c[5];
+  (read(STDIN_FILENO, c, 5)
+  switch (c[0]) {
+  case '[':
+    switch (c[1]) {
+    case 'A':
+      return ARROW_U;
+    case 'B':
+      return ARROW_D;
+    case 'C':
+      return ARROW_R;
+    case 'D':
+      return ARROW_L;
+    }
+  }
+  return UNDEFINED;
+}
+
 key_pressed get_keypressed() {
   char c;
   read(STDIN_FILENO, &c, 1);
   switch (c) {
+  case 10:
+    return ENTER;
   case 'q':
   case 'Q':
     return EXIT;
@@ -70,6 +91,8 @@ key_pressed get_keypressed() {
   case 'U':
   case 'u':
     return UNDO;
+  case 0x1b:
+    return escaped_input();
   default:
     return UNDEFINED;
   }
