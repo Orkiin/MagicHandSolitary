@@ -26,12 +26,16 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "uiterm.h"
 #include <stdio.h>
 
-typedef enum { NEW_GAME, CONFIGURE, HELP, EXIT_GAME, }
-options;
+typedef enum {
+  NEW_GAME,
+  CONFIGURE,
+  HELP,
+  EXIT_GAME,
+} options;
 
 typedef struct {
   options selected;
-}menu_t;
+} menu_t;
 
 void menu(game_state_solitary *game);
 

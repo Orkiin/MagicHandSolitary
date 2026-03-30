@@ -3,6 +3,7 @@
 void menu(game_state_solitary *game) {
   while (true) {
     show_menu();
+    game->hand_toggled = true;
     switch (get_keypressed()) {
     case TABLEAU1:
       game->dif = EASY;

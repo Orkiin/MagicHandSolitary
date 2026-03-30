@@ -91,6 +91,9 @@ key_pressed get_keypressed() {
   case 'U':
   case 'u':
     return UNDO;
+  case 'H':
+  case 'h':
+    return HAND;
   case 0x1b:
     return escaped_input();
   default:

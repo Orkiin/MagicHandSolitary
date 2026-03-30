@@ -241,6 +241,14 @@ bool quick_foundation(game_state_solitary *game) {
 }
 
 bool quick_tableau(game_state_solitary *game) {
+  if (!HAND_IS_EMPTY(game)) {
+    for (int index = 0; index < 7; index++) {
+      if (move_hand_tableau(game, index)) {
+        return true;
+      }
+    }
+    return true;
+  }
   for (int index = 0; index < 7; index++) {
     if (move_window_tableau(game, index))
       return true;

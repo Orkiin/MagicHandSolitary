@@ -29,6 +29,10 @@ typedef enum {
   EXIT_GAME,
 } game_state;
 
+TEMPLATEGENERALCONTAINER(game_state_solitary);
+TEMPLATEPUSHEND(game_state_solitary);
+TEMPLATESTACKPOP_UNSAFE(game_state_solitary);
+
 game_state application(game_state_solitary *game);
 void menu(game_state_solitary *game);
 
@@ -46,6 +50,8 @@ int main(void) {
 game_state application(game_state_solitary *game) {
   new_game(game);
   show_game_state(game);
+  game_state_solitary_container hand_undo = (game_state_solitary_container){
+      .data = (game_state_solitary[1]){0}, .capacity = 1, 0};
   for (key_pressed key = get_keypressed(); key != EXIT;
        key = get_keypressed()) {
     switch (key) {
@@ -55,6 +61,56 @@ game_state application(game_state_solitary *game) {
       break;
     case RESET:
       return NEW_GAME;
+      break;
+    case HAND:
+      if (!game->hand_toggled)
+        break;
+      push_game_state_solitary(*game, &hand_undo);
+      while (true) {
+        switch (get_keypressed()) {
+        case TABLEAU1:
+          move_tableau_hand(game, 0);
+          show_game_state(game);
+          break;
+        case TABLEAU2:
+          move_tableau_hand(game, 1);
+          show_game_state(game);
+          break;
+        case TABLEAU3:
+          move_tableau_hand(game, 2);
+          show_game_state(game);
+          break;
+        case TABLEAU4:
+          move_tableau_hand(game, 3);
+          show_game_state(game);
+          break;
+        case TABLEAU5:
+          move_tableau_hand(game, 4);
+          show_game_state(game);
+          break;
+        case TABLEAU6:
+          move_tableau_hand(game, 5);
+          show_game_state(game);
+          break;
+        case TABLEAU7:
+          move_tableau_hand(game, 6);
+          show_game_state(game);
+          break;
+        case QUICKTABLEAU:
+          quick_tableau(game);
+          show_game_state(game);
+          goto FINALIZE_HAND;
+          break;
+        default:
+          goto UNDO_HAND;
+          break;
+        }
+      }
+    UNDO_HAND:
+      // restaura estado del juego antes de mano;
+      *game = ppop_game_state_solitary_unsafe(&hand_undo);
+    FINALIZE_HAND:
+      show_game_state(game);
       break;
     case FUNDATION1:
       switch (get_keypressed()) {
@@ -250,10 +306,6 @@ game_state application(game_state_solitary *game) {
         move_tableau_fundation(game, 0);
         show_game_state(game);
         break;
-      case HAND:
-        move_tableau_hand(game, 0);
-        show_game_state(game);
-        break;
       case TABLEAU2:
         move_tableau_tableau(game, 0, 1);
         show_game_state(game);
@@ -289,10 +341,6 @@ game_state application(game_state_solitary *game) {
       case FUNDATION3:
       case FUNDATION4:
         move_tableau_fundation(game, 1);
-        show_game_state(game);
-        break;
-      case HAND:
-        move_tableau_hand(game, 1);
         show_game_state(game);
         break;
       case TABLEAU1:
@@ -332,10 +380,6 @@ game_state application(game_state_solitary *game) {
         move_tableau_fundation(game, 2);
         show_game_state(game);
         break;
-      case HAND:
-        move_tableau_hand(game, 2);
-        show_game_state(game);
-        break;
       case TABLEAU1:
         move_tableau_tableau(game, 2, 0);
         show_game_state(game);
@@ -371,10 +415,6 @@ game_state application(game_state_solitary *game) {
       case FUNDATION3:
       case FUNDATION4:
         move_tableau_fundation(game, 3);
-        show_game_state(game);
-        break;
-      case HAND:
-        move_tableau_hand(game, 3);
         show_game_state(game);
         break;
       case TABLEAU1:
@@ -414,10 +454,6 @@ game_state application(game_state_solitary *game) {
         move_tableau_fundation(game, 4);
         show_game_state(game);
         break;
-      case HAND:
-        move_tableau_hand(game, 4);
-        show_game_state(game);
-        break;
       case TABLEAU1:
         move_tableau_tableau(game, 4, 0);
         show_game_state(game);
@@ -455,10 +491,6 @@ game_state application(game_state_solitary *game) {
         move_tableau_fundation(game, 5);
         show_game_state(game);
         break;
-      case HAND:
-        move_tableau_hand(game, 5);
-        show_game_state(game);
-        break;
       case TABLEAU1:
         move_tableau_tableau(game, 5, 0);
         show_game_state(game);
@@ -494,10 +526,6 @@ game_state application(game_state_solitary *game) {
       case FUNDATION3:
       case FUNDATION4:
         move_tableau_fundation(game, 6);
-        show_game_state(game);
-        break;
-      case HAND:
-        move_tableau_hand(game, 6);
         show_game_state(game);
         break;
       case TABLEAU1:

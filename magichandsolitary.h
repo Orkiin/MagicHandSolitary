@@ -48,6 +48,7 @@ typedef struct {
   card_stack window;
   card_stack hand;
   difficulty dif;
+  bool hand_toggled;
   // TODO: cursor to navigate through the game
 } game_state_solitary;
 
