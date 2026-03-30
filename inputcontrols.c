@@ -22,7 +22,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 key_pressed escaped_input() {
   char c[5];
-  (read(STDIN_FILENO, c, 5)
+  read(STDIN_FILENO, c, 5);
   switch (c[0]) {
   case '[':
     switch (c[1]) {

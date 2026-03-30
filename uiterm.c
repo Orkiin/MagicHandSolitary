@@ -196,6 +196,12 @@ void show_hand(card_stack *hand) {
   }
 }
 
+void show_menu() {
+  printf(CLEAR_SCREEN BUFFER_HOME
+         "1. New easy game\n2. New hard game\nq. quit");
+  fflush(stdout);
+}
+
 void show_game_state(game_state_solitary *game) {
   printf(CLEAR_SCREEN);
   printf(BUFFER_HOME);

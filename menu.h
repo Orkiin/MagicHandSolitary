@@ -17,36 +17,22 @@ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
-#ifndef UI_TERM_H
-#define UI_TERM_H
+*/
+#ifndef CARDS_MENU_H
+#define CARDS_MENU_H
 
+#include "inputcontrols.h"
+#include "magichandsolitary.h"
+#include "uiterm.h"
 #include <stdio.h>
 
-#include "cards.h"
-#include "magichandsolitary.h"
+typedef enum { NEW_GAME, CONFIGURE, HELP, EXIT_GAME, }
+options;
 
-typedef enum {
-  NONE,
-  EMPTY,
-  HIDDEN,
-  VISIBLE,
-  SELECTED,
-  GROUP_SELECTED,
-  SIDE_STACKED,
-} card_state;
+typedef struct {
+  options selected;
+}menu_t;
 
-void restore();
-void setup();
-void show_card(card a, card_state state);
-void show_side_stack(card_stack *stack);
-void show_deck(card_stack *stack);
-void show_fundation(card_stack *fundation);
-void show_tableau(card_stack *tableau, size_t row);
-void show_window(card_stack *window);
-void show_stock(card_stack *stack);
-void show_hand(card_stack *hand);
-void show_game_state(game_state_solitary *game);
-void show_menu();
+void menu(game_state_solitary *game);
 
-#endif // !UI_TERM_H
+#endif // CARDS_MENU_H
