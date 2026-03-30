@@ -11,6 +11,7 @@ Classic Klondike Solitary, completely playable from terminal.
 | 'n' | juego nuevo/new game |
 | 'q' | salir/exit |
 | ' ' | robar/draw |
+| 'h' | mano magica/magic hand |
 | 'f' | (auto) fundacion/foundation |
 | 't' | (auto) tableau |
 | '1-7' | seleccionar tableau/ select tableau |
