@@ -537,7 +537,7 @@ game_state application(game_state_solitary *game) {
         break;
     }
     if (i == 7 && STACK_IS_EMPTY(&(game->stock)) &&
-        STACK_IS_EMPTY(&(game->stock))) {
+        STACK_IS_EMPTY(&(game->waste))) {
       printf("YOU WON! Press 'N' to play a new game, any key to exit");
       fflush(stdout);
       if (get_keypressed() == RESET) {
