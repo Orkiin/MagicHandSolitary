@@ -196,10 +196,14 @@ void show_hand(card_stack *hand) {
   }
 }
 
-void show_menu() {
-  printf(CLEAR_SCREEN BUFFER_HOME
-         "1. New easy game\n2. New hard game\nq. quit");
-  fflush(stdout);
+void show_menu(menu_t *menu_state) {
+  printf(CLEAR_SCREEN BUFFER_HOME);
+  for (size_t line = 0; line < menu_state->options_number; line++) {
+    if (line == menu_state->current_index)
+      printf(SELECTED_BG COLOR_BLACK);
+    printf("%-25s" RESET_DEFAULT_COLOR "\n",
+           menu_state->option[line].option_text);
+  }
 }
 
 void show_game_state(game_state_solitary *game) {

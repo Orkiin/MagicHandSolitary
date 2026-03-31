@@ -52,6 +52,7 @@ typedef struct {
   // TODO: cursor to navigate through the game
 } game_state_solitary;
 
+void change_difficulty(game_state_solitary *game);
 bool new_game(game_state_solitary *game);
 void draw_stock(game_state_solitary *game);
 bool move_window_fundation(game_state_solitary *game);

@@ -39,6 +39,17 @@ void commit_changes_tableau(game_state_solitary *game) {
   }
 }
 
+void change_difficulty(game_state_solitary *game) {
+  switch (game->dif) {
+  case EASY:
+    game->dif = HARD;
+    break;
+  case HARD:
+    game->dif = EASY;
+    break;
+  }
+}
+
 bool new_game(game_state_solitary *game) {
   for (size_t i = 0; i < 4; i++) {
     game->fundation[i] =

@@ -25,6 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "cards.h"
 #include "magichandsolitary.h"
+#include "menu.h"
 
 typedef enum {
   NONE,
@@ -47,6 +48,6 @@ void show_window(card_stack *window);
 void show_stock(card_stack *stack);
 void show_hand(card_stack *hand);
 void show_game_state(game_state_solitary *game);
-void show_menu();
+void show_menu(menu_t *menu_state);
 
 #endif // !UI_TERM_H

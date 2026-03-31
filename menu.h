@@ -23,20 +23,39 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "inputcontrols.h"
 #include "magichandsolitary.h"
-#include "uiterm.h"
 #include <stdio.h>
 
 typedef enum {
-  NEW_GAME,
+  NEW_GAME_CLASSIC,
+  NEW_GAME_MAGICHAND,
   CONFIGURE,
+  CHANGE_DIFFICULTY,
   HELP,
   EXIT_GAME,
+  OPTIONS_COUNT,
 } options;
 
+typedef enum {
+  LANG_EN,
+  LANG_ES,
+  LANG_COUNT,
+} LANG_ID;
+
 typedef struct {
-  options selected;
+  const char *option_text;
+  options option;
+} menu_option;
+
+typedef struct {
+  menu_option *option;
+  game_state_solitary *game;
+  size_t options_number;
+  size_t current_index;
 } menu_t;
 
-void menu(game_state_solitary *game);
+const char *get_text(LANG_ID lan, options opt);
+void menu_next_option(menu_t *menu);
+void menu_prev_option(menu_t *menu);
+bool menu_select(menu_t *menu);
 
 #endif // CARDS_MENU_H

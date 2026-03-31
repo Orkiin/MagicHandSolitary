@@ -21,15 +21,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "generalcontainer.h"
 #include "inputcontrols.h"
 #include "magichandsolitary.h"
+#include "menu.h"
 #include "uiterm.h"
 #include <stdlib.h>
 
 #define MAX_UNDO_STACK 20
-
-typedef enum {
-  NEW_GAME,
-  EXIT_GAME,
-} game_state;
 
 TEMPLATEGENERALCONTAINER(game_state_solitary);
 TEMPLATEPUSHEND(game_state_solitary);
@@ -37,21 +33,50 @@ TEMPLATESTACKPOP_UNSAFE(game_state_solitary);
 TEMPLATERESULTERRORAWARE(game_state_solitary);
 TEMPLATESTACKPOP(game_state_solitary);
 
-game_state application(game_state_solitary *game);
-void menu(game_state_solitary *game);
+bool run_game(game_state_solitary *game);
+bool application(menu_t *menu);
 
 int main(void) {
   setup();
-  game_state_solitary game = {0};
+  menu_t main_menu = (menu_t){
+      .option =
+          (menu_option[4]){
+              (menu_option){get_text(LANG_ES, NEW_GAME_CLASSIC),
+                            NEW_GAME_CLASSIC},
+              (menu_option){get_text(LANG_ES, NEW_GAME_MAGICHAND),
+                            NEW_GAME_MAGICHAND},
+              (menu_option){get_text(LANG_ES, CHANGE_DIFFICULTY),
+                            CHANGE_DIFFICULTY},
+              (menu_option){get_text(LANG_ES, EXIT_GAME), EXIT_GAME},
+          },
+      .game = (game_state_solitary[1]){0},
+      .options_number = 4,
+      .current_index = 0,
+  };
+  return application(&main_menu);
+}
+
+bool application(menu_t *menu) {
   while (true) {
-    menu(&game);
-    while (!application(&game))
-      ;
+    show_menu(menu);
+    switch (get_keypressed()) {
+    case ARROW_D:
+      menu_next_option(menu);
+      break;
+    case ARROW_U:
+      menu_prev_option(menu);
+      break;
+    case ENTER:
+    case ARROW_R:
+      if (menu_select(menu))
+        while (run_game(menu->game))
+          ;
+    }
   }
   return EXIT_SUCCESS;
 }
 
-game_state application(game_state_solitary *game) {
+bool run_game(game_state_solitary *game) {
   new_game(game);
   show_game_state(game);
   game_state_solitary_container hand_undo = (game_state_solitary_container){
@@ -70,7 +95,7 @@ game_state application(game_state_solitary *game) {
       show_game_state(game);
       break;
     case RESET:
-      return NEW_GAME;
+      return true;
       break;
     case HAND:
       if (!game->hand_toggled)
@@ -868,9 +893,10 @@ game_state application(game_state_solitary *game) {
       printf("YOU WON! Press 'N' to play a new game, any key to exit");
       fflush(stdout);
       if (get_keypressed() == RESET) {
-        return NEW_GAME;
+        return true;
       }
-      return EXIT_GAME;
+      return false;
     }
   }
+  return false;
 }
