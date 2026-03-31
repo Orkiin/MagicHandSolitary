@@ -19,11 +19,14 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #include "uiterm.h"
-#include "cards.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <termios.h>
 #include <unistd.h>
+#if defined(WINDOWS)
+#include <windows.h>
+#else
+#include <termios.h>
+#endif // defined
 
 // TODO: Implementar visobilidad de cartas por cursor
 
@@ -43,6 +46,34 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #define STR_CARD_COLOR(c) (IS_RED_SUIT((c).s) ? COLOR_RED : COLOR_BLACK)
 
+#if defined(WINDOWS)
+
+HANDLE hStdin, hStdout;
+DWORD fdwSaveOldMode;
+CONSOLE_SCREEN_BUFFER_INFO csbi;
+
+void restore() {
+  printf(SHOW_CURSOR);
+  printf(ORIGINAL_BUFFER);
+  fflush(stdout);
+  SetConsoleMode(hStdin,fdwSaveOldMode);
+}
+
+void setup() {
+  hStdin = GetStdHandle(STD_INPUT_HANDLE);
+  hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+  GetConsoleMode(hStdin,&fdwSaveOldMode);
+  DWORD rawmode = ENABLE_EXTENDED_FLAGS;
+  SetConsoleMode(hStdin,rawmode);
+  system("cls");
+  printf(ALTERNATE_BUFFER "\n");
+  printf(HIDE_CURSOR);
+  printf(CLEAR_SCREEN);
+  printf(BUFFER_HOME);
+  fflush(stdout);
+  atexit(restore);
+}
+#else
 static struct termios original_termios;
 
 void restore() {
@@ -67,6 +98,7 @@ void setup() {
   fflush(stdout);
   atexit(restore);
 }
+#endif // defined
 
 void show_card(card a, card_state state) {
   char *suitdisplay[] = {"♥", "♦", "♣", "♠"};
