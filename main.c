@@ -38,21 +38,9 @@ bool application(menu_t *menu);
 
 int main(void) {
   setup();
-  menu_t main_menu = (menu_t){
-      .option =
-          (menu_option[4]){
-              (menu_option){get_text(LANG_ES, NEW_GAME_CLASSIC),
-                            NEW_GAME_CLASSIC},
-              (menu_option){get_text(LANG_ES, NEW_GAME_MAGICHAND),
-                            NEW_GAME_MAGICHAND},
-              (menu_option){get_text(LANG_ES, CHANGE_DIFFICULTY),
-                            CHANGE_DIFFICULTY},
-              (menu_option){get_text(LANG_ES, EXIT_GAME), EXIT_GAME},
-          },
-      .game = (game_state_solitary[1]){0},
-      .options_number = 4,
-      .current_index = 0,
-  };
+  menu_t main_menu = create_menu(
+      (options[6]){NEW_GAME_CLASSIC, NEW_GAME_MAGICHAND, CHANGE_DIFFICULTY,
+                   CHANGE_LANGUAGE, EXIT_GAME, OPTIONS_COUNT});
   return application(&main_menu);
 }
 

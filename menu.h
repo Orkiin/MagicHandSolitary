@@ -30,7 +30,9 @@ typedef enum {
   NEW_GAME_MAGICHAND,
   CONFIGURE,
   CHANGE_DIFFICULTY,
+  CHANGE_LANGUAGE,
   HELP,
+  BACK,
   EXIT_GAME,
   OPTIONS_COUNT,
 } options;
@@ -54,8 +56,12 @@ typedef struct {
 } menu_t;
 
 const char *get_text(LANG_ID lan, options opt);
+void change_lang(menu_t *menu, LANG_ID desired);
 void menu_next_option(menu_t *menu);
 void menu_prev_option(menu_t *menu);
 bool menu_select(menu_t *menu);
+// OPTIONS_COUNT terminated array of options
+menu_t create_menu(options *options);
+void destroy_menu(menu_t *menu);
 
 #endif // CARDS_MENU_H
