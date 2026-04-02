@@ -25,22 +25,23 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define ESCAPED_INPUT 224
 
 int kbread(int *c, int len) {
-  for(int i = 0; i < len; i++){
-    if(!_kbhit()){
-        return i;
+  for (int i = 0; i < len; i++) {
+    if (!_kbhit()) {
+      return i;
     }
     c[i] = _getch();
   }
   return len;
 }
 
-#define READ(FILENO, chrptr, chrlen) do{} while(!kbread(chrptr, chrlen)) 
+#define READ(FILENO, chrptr, chrlen)                                           \
+  do {                                                                         \
+  } while (!kbread(chrptr, chrlen))
 
 #else
 #define ESCAPED_INPUT 0x1b
 #define READ(FILENO, chrptr, chrlen) read(FILENO, chrptr, chrlen)
 #endif // defined
-
 
 key_pressed escaped_input() {
   int c[5];
@@ -57,14 +58,14 @@ key_pressed escaped_input() {
     case 'D':
       return ARROW_L;
     }
-    case 'H':
-      return ARROW_U;
-    case 'P':
-      return ARROW_D;
-    case 'K':
-      return ARROW_L;
-    case 'M':
-      return ARROW_R;
+  case 'H':
+    return ARROW_U;
+  case 'P':
+    return ARROW_D;
+  case 'K':
+    return ARROW_L;
+  case 'M':
+    return ARROW_R;
   }
   return UNDEFINED;
 }

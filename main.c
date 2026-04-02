@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define MAX_UNDO_STACK 20
 
 TEMPLATEGENERALCONTAINER(game_state_solitary);
-TEMPLATEPUSHEND(game_state_solitary);
+TEMPLATEPUSHENDOVERWRITE(game_state_solitary);
 TEMPLATESTACKPOP_UNSAFE(game_state_solitary);
 TEMPLATERESULTERRORAWARE(game_state_solitary);
 TEMPLATESTACKPOP(game_state_solitary);
@@ -90,7 +90,7 @@ bool run_game(game_state_solitary *game) {
        key = get_keypressed()) {
     switch (key) {
     case DRAW:
-      push_game_state_solitary(*game, &undo_stack);
+      push_game_state_solitary_overwrite(*game, &undo_stack);
       draw_stock(game);
       show_game_state(game);
       break;
@@ -100,8 +100,8 @@ bool run_game(game_state_solitary *game) {
     case HAND:
       if (!game->hand_toggled)
         break;
-      push_game_state_solitary(*game, &undo_stack);
-      push_game_state_solitary(*game, &hand_undo);
+      push_game_state_solitary_overwrite(*game, &undo_stack);
+      push_game_state_solitary_overwrite(*game, &hand_undo);
       while (true) {
         switch (get_keypressed()) {
         case TABLEAU1:
@@ -150,7 +150,7 @@ bool run_game(game_state_solitary *game) {
       show_game_state(game);
       break;
     case FUNDATION1:
-      push_game_state_solitary(*game, &undo_stack);
+      push_game_state_solitary_overwrite(*game, &undo_stack);
       switch (get_keypressed()) {
       case TABLEAU1:
         if (move_foundation_tableau(game, 0, 0)) {
@@ -206,7 +206,7 @@ bool run_game(game_state_solitary *game) {
       }
       break;
     case FUNDATION2:
-      push_game_state_solitary(*game, &undo_stack);
+      push_game_state_solitary_overwrite(*game, &undo_stack);
       switch (get_keypressed()) {
       case TABLEAU1:
         if (move_foundation_tableau(game, 1, 0)) {
@@ -262,7 +262,7 @@ bool run_game(game_state_solitary *game) {
       }
       break;
     case FUNDATION3:
-      push_game_state_solitary(*game, &undo_stack);
+      push_game_state_solitary_overwrite(*game, &undo_stack);
       switch (get_keypressed()) {
       case TABLEAU1:
         if (move_foundation_tableau(game, 2, 0)) {
@@ -318,7 +318,7 @@ bool run_game(game_state_solitary *game) {
       }
       break;
     case FUNDATION4:
-      push_game_state_solitary(*game, &undo_stack);
+      push_game_state_solitary_overwrite(*game, &undo_stack);
       switch (get_keypressed()) {
       case TABLEAU1:
         if (move_foundation_tableau(game, 3, 0)) {
@@ -374,7 +374,7 @@ bool run_game(game_state_solitary *game) {
       }
       break;
     case QUICKFUNDATION:
-      push_game_state_solitary(*game, &undo_stack);
+      push_game_state_solitary_overwrite(*game, &undo_stack);
       if (quick_foundation(game)) {
         show_game_state(game);
         break;
@@ -382,7 +382,7 @@ bool run_game(game_state_solitary *game) {
       ppop_game_state_solitary_unsafe(&undo_stack);
       break;
     case QUICKTABLEAU:
-      push_game_state_solitary(*game, &undo_stack);
+      push_game_state_solitary_overwrite(*game, &undo_stack);
       if (quick_tableau(game)) {
         show_game_state(game);
         break;
@@ -390,7 +390,7 @@ bool run_game(game_state_solitary *game) {
       ppop_game_state_solitary_unsafe(&undo_stack);
       break;
     case WINDOW:
-      push_game_state_solitary(*game, &undo_stack);
+      push_game_state_solitary_overwrite(*game, &undo_stack);
       switch (get_keypressed()) {
       case FUNDATION1:
       case FUNDATION2:
@@ -456,7 +456,7 @@ bool run_game(game_state_solitary *game) {
       }
       break;
     case TABLEAU1:
-      push_game_state_solitary(*game, &undo_stack);
+      push_game_state_solitary_overwrite(*game, &undo_stack);
       switch (get_keypressed()) {
       case FUNDATION1:
       case FUNDATION2:
@@ -515,7 +515,7 @@ bool run_game(game_state_solitary *game) {
       }
       break;
     case TABLEAU2:
-      push_game_state_solitary(*game, &undo_stack);
+      push_game_state_solitary_overwrite(*game, &undo_stack);
       switch (get_keypressed()) {
       case FUNDATION1:
       case FUNDATION2:
@@ -574,7 +574,7 @@ bool run_game(game_state_solitary *game) {
       }
       break;
     case TABLEAU3:
-      push_game_state_solitary(*game, &undo_stack);
+      push_game_state_solitary_overwrite(*game, &undo_stack);
       switch (get_keypressed()) {
       case FUNDATION1:
       case FUNDATION2:
@@ -633,7 +633,7 @@ bool run_game(game_state_solitary *game) {
       }
       break;
     case TABLEAU4:
-      push_game_state_solitary(*game, &undo_stack);
+      push_game_state_solitary_overwrite(*game, &undo_stack);
       switch (get_keypressed()) {
       case FUNDATION1:
       case FUNDATION2:
@@ -692,7 +692,7 @@ bool run_game(game_state_solitary *game) {
       }
       break;
     case TABLEAU5:
-      push_game_state_solitary(*game, &undo_stack);
+      push_game_state_solitary_overwrite(*game, &undo_stack);
       switch (get_keypressed()) {
       case FUNDATION1:
       case FUNDATION2:
@@ -751,7 +751,7 @@ bool run_game(game_state_solitary *game) {
       }
       break;
     case TABLEAU6:
-      push_game_state_solitary(*game, &undo_stack);
+      push_game_state_solitary_overwrite(*game, &undo_stack);
       switch (get_keypressed()) {
       case FUNDATION1:
       case FUNDATION2:
@@ -810,7 +810,7 @@ bool run_game(game_state_solitary *game) {
       }
       break;
     case TABLEAU7:
-      push_game_state_solitary(*game, &undo_stack);
+      push_game_state_solitary_overwrite(*game, &undo_stack);
       switch (get_keypressed()) {
       case FUNDATION1:
       case FUNDATION2:

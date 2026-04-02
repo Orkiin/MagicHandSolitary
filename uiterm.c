@@ -56,15 +56,15 @@ void restore() {
   printf(SHOW_CURSOR);
   printf(ORIGINAL_BUFFER);
   fflush(stdout);
-  SetConsoleMode(hStdin,fdwSaveOldMode);
+  SetConsoleMode(hStdin, fdwSaveOldMode);
 }
 
 void setup() {
   hStdin = GetStdHandle(STD_INPUT_HANDLE);
   hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-  GetConsoleMode(hStdin,&fdwSaveOldMode);
+  GetConsoleMode(hStdin, &fdwSaveOldMode);
   DWORD rawmode = ENABLE_EXTENDED_FLAGS;
-  SetConsoleMode(hStdin,rawmode);
+  SetConsoleMode(hStdin, rawmode);
   system("cls");
   printf(ALTERNATE_BUFFER "\n");
   printf(HIDE_CURSOR);

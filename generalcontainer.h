@@ -147,6 +147,22 @@ typedef enum {
     return OK;                                                                 \
   }
 
+#define TEMPLATEPUSHENDOVERWRITE(type)                                         \
+  void push_##type##_overwrite(type value,                                     \
+                               TEMPLATETYPENAME(type) * container) {           \
+    if (container->number == container->capacity) {                            \
+      container->number--;                                                     \
+      container->front++;                                                      \
+      if (container->front == container->capacity)                             \
+        container->front = 0;                                                  \
+    }                                                                          \
+    container->data[container->rear++] = value;                                \
+    container->number++;                                                       \
+    if (container->rear == container->capacity) {                              \
+      container->rear = 0;                                                     \
+    }                                                                          \
+  }
+
 #define TEMPLATEPUSHEND_OPT(type)                                              \
   result push_##type##_opt(TEMPLATETYPEOPTION(type) optional_value,            \
                            TEMPLATETYPENAME(type) * container) {               \
