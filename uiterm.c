@@ -232,7 +232,8 @@ void show_menu(menu_t *menu_state) {
   printf(CLEAR_SCREEN BUFFER_HOME);
   for (size_t line = 0; line < menu_state->options_number; line++) {
     if (line == menu_state->current_index)
-      printf(SELECTED_BG COLOR_BLACK);
+      printf((menu_state->game->dif == EASY) ? SELECTED_BG COLOR_BLACK
+                                             : NORMAL_BG COLOR_RED);
     printf("%-25s" RESET_DEFAULT_COLOR "\n",
            menu_state->option[line].option_text);
   }
