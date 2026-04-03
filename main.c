@@ -38,9 +38,9 @@ bool application(menu_t *menu);
 
 int main(void) {
   setup();
-  menu_t main_menu = create_menu(
-      (options[6]){NEW_GAME_CLASSIC, NEW_GAME_MAGICHAND, CHANGE_DIFFICULTY,
-                   CHANGE_LANGUAGE, EXIT_GAME, OPTIONS_COUNT});
+  menu_t main_menu =
+      create_menu((options[6]){NEW_GAME_CLASSIC, NEW_GAME_MAGICHAND, HELP,
+                               CONFIGURE, EXIT_GAME, OPTIONS_COUNT});
   return application(&main_menu);
 }
 
@@ -56,7 +56,7 @@ bool application(menu_t *menu) {
       break;
     case ENTER:
     case ARROW_R:
-      if (menu_select(menu))
+      if (menu_select(&menu))
         while (run_game(menu->game))
           ;
     }
