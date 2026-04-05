@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define LAST_FROM_TABLEAU_IS_VISIBLE(tableau)                                  \
   ((tableau)->front != (tableau)->number)
 
-void commit_changes_tableau(game_state_solitary *game) {
+void finalize_move(game_state_solitary *game) {
   for (int i = 0; i < 7; i++) {
     card_stack *current_tableau = &game->tableau[i];
     if (!LAST_FROM_TABLEAU_IS_VISIBLE(current_tableau) &&
@@ -171,7 +171,7 @@ bool move_hand_tableau(game_state_solitary *game, int tableau_index) {
          iter = ppop(&game->hand)) {
       push(iter, &game->tableau[tableau_index]);
     }
-    commit_changes_tableau(game);
+    finalize_move(game);
     return true;
   }
   return false;
