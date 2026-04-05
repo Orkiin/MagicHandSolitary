@@ -127,12 +127,10 @@ typedef enum {
   }
 
 #define TEMPLATESTACKPEEK_UNSAFE(type)                                         \
-  TEMPLATETYPERESULT(type)                                                     \
-  ppeek_##type##_unsafe(TEMPLATETYPENAME(type) * container) {                  \
+  type ppeek_##type##_unsafe(TEMPLATETYPENAME(type) * container) {             \
     size_t index = (container->rear == 0) ? container->capacity - 1            \
                                           : container->rear - 1;               \
-    return (TEMPLATETYPERESULT(type)){.r = OK,                                 \
-                                      .data.t = container->data[index]};       \
+    return container->data[index];                                             \
   }
 
 #define TEMPLATEPUSHEND(type)                                                  \
