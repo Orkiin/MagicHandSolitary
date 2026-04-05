@@ -29,10 +29,16 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 TEMPLATEGENERALCONTAINER(game_state_solitary);
 TEMPLATEPUSHENDOVERWRITE(game_state_solitary);
-TEMPLATESTACKPOP_UNSAFE(game_state_solitary);
 TEMPLATERESULTERRORAWARE(game_state_solitary);
+TEMPLATESTACKPOP_UNSAFE(game_state_solitary);
+TEMPLATEQUEUEPOP_UNSAFE(game_state_solitary);
 TEMPLATESTACKPOP(game_state_solitary);
 
+TEMPLATEGENERALCONTAINER(int);
+TEMPLATESTACKPOP_UNSAFE(int);
+TEMPLATEPUSHEND(int);
+
+bool handle_hand(game_state_solitary *game);
 bool run_game(game_state_solitary *game);
 bool application(menu_t *menu);
 
@@ -64,11 +70,114 @@ bool application(menu_t *menu) {
   return EXIT_SUCCESS;
 }
 
+bool handle_hand(game_state_solitary *game) {
+  game_state_solitary_container hand_undo = (game_state_solitary_container){
+      .data = (game_state_solitary[14]){0}, .capacity = 14, 0};
+  result_game_state_solitary can_undo;
+  int_container tableaus =
+      (int_container){.data = (int[14]){0}, .capacity = 14, 0};
+  push_game_state_solitary_overwrite(*game, &hand_undo);
+  while (true) {
+    switch (get_keypressed()) {
+    case TABLEAU1:
+      push_game_state_solitary_overwrite(*game, &hand_undo);
+      if (move_tableau_hand(game, 0)) {
+        push_int(0, &tableaus);
+        show_game_state(game);
+        break;
+      }
+      *game = ppop_game_state_solitary_unsafe(&hand_undo);
+      break;
+    case TABLEAU2:
+      push_game_state_solitary_overwrite(*game, &hand_undo);
+      if (move_tableau_hand(game, 1)) {
+        push_int(1, &tableaus);
+        show_game_state(game);
+        break;
+      }
+      *game = ppop_game_state_solitary_unsafe(&hand_undo);
+      break;
+    case TABLEAU3:
+      push_game_state_solitary_overwrite(*game, &hand_undo);
+      if (move_tableau_hand(game, 2)) {
+        push_int(2, &tableaus);
+        show_game_state(game);
+        break;
+      }
+      *game = ppop_game_state_solitary_unsafe(&hand_undo);
+      break;
+    case TABLEAU4:
+      push_game_state_solitary_overwrite(*game, &hand_undo);
+      if (move_tableau_hand(game, 3)) {
+        push_int(3, &tableaus);
+        show_game_state(game);
+        break;
+      }
+      *game = ppop_game_state_solitary_unsafe(&hand_undo);
+      break;
+    case TABLEAU5:
+      push_game_state_solitary_overwrite(*game, &hand_undo);
+      if (move_tableau_hand(game, 4)) {
+        push_int(4, &tableaus);
+        show_game_state(game);
+        break;
+      }
+      *game = ppop_game_state_solitary_unsafe(&hand_undo);
+      break;
+    case TABLEAU6:
+      push_game_state_solitary_overwrite(*game, &hand_undo);
+      if (move_tableau_hand(game, 5)) {
+        push_int(5, &tableaus);
+        show_game_state(game);
+        break;
+      }
+      *game = ppop_game_state_solitary_unsafe(&hand_undo);
+      break;
+    case TABLEAU7:
+      push_game_state_solitary_overwrite(*game, &hand_undo);
+      if (move_tableau_hand(game, 6)) {
+        push_int(6, &tableaus);
+        show_game_state(game);
+        break;
+      }
+      *game = ppop_game_state_solitary_unsafe(&hand_undo);
+      break;
+    case QUICKTABLEAU:
+      if (quick_tableau(game)) {
+        show_game_state(game);
+        return true;
+      }
+      break;
+    case UNDO:
+      can_undo = ppop_game_state_solitary(&hand_undo);
+      if (can_undo.r == OK) {
+        *game = can_undo.data.t;
+        ppop_int_unsafe(&tableaus);
+        show_game_state(game);
+      }
+      break;
+    case HAND:
+      if (!STACK_IS_EMPTY(&(game->hand))) {
+        can_undo = ppop_game_state_solitary(&hand_undo);
+        if (can_undo.r == OK) {
+          *game = can_undo.data.t;
+        }
+        move_hand_tableau(game, ppop_int_unsafe(&tableaus));
+        show_game_state(game);
+        return true;
+      }
+    default:
+      *game = qpop_game_state_solitary_unsafe(&hand_undo);
+      show_game_state(game);
+      return false;
+    }
+  }
+  return false;
+}
+
 bool run_game(game_state_solitary *game) {
   new_game(game);
   show_game_state(game);
-  game_state_solitary_container hand_undo = (game_state_solitary_container){
-      .data = (game_state_solitary[1]){0}, .capacity = 1, 0};
   game_state_solitary_container undo_stack = (game_state_solitary_container){
       .data = (game_state_solitary[MAX_UNDO_STACK]){0},
       .capacity = MAX_UNDO_STACK,
@@ -86,56 +195,11 @@ bool run_game(game_state_solitary *game) {
       return true;
       break;
     case HAND:
-      if (!game->hand_toggled)
-        break;
       push_game_state_solitary_overwrite(*game, &undo_stack);
-      push_game_state_solitary_overwrite(*game, &hand_undo);
-      while (true) {
-        switch (get_keypressed()) {
-        case TABLEAU1:
-          move_tableau_hand(game, 0);
-          show_game_state(game);
-          break;
-        case TABLEAU2:
-          move_tableau_hand(game, 1);
-          show_game_state(game);
-          break;
-        case TABLEAU3:
-          move_tableau_hand(game, 2);
-          show_game_state(game);
-          break;
-        case TABLEAU4:
-          move_tableau_hand(game, 3);
-          show_game_state(game);
-          break;
-        case TABLEAU5:
-          move_tableau_hand(game, 4);
-          show_game_state(game);
-          break;
-        case TABLEAU6:
-          move_tableau_hand(game, 5);
-          show_game_state(game);
-          break;
-        case TABLEAU7:
-          move_tableau_hand(game, 6);
-          show_game_state(game);
-          break;
-        case QUICKTABLEAU:
-          quick_tableau(game);
-          show_game_state(game);
-          goto FINALIZE_HAND;
-          break;
-        default:
-          goto UNDO_HAND;
-          break;
-        }
-      }
-    UNDO_HAND:
-      // restaura estado del juego antes de mano;
-      *game = ppop_game_state_solitary_unsafe(&hand_undo);
+      if (game->hand_toggled)
+        handle_hand(game);
+      break;
       ppop_game_state_solitary_unsafe(&undo_stack);
-    FINALIZE_HAND:
-      show_game_state(game);
       break;
     case FUNDATION1:
       push_game_state_solitary_overwrite(*game, &undo_stack);
