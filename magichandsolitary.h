@@ -52,6 +52,7 @@ typedef struct {
   // TODO: cursor to navigate through the game
 } game_state_solitary;
 
+void show_last_from_tableau(game_state_solitary *game, int index);
 void change_difficulty(game_state_solitary *game);
 bool new_game(game_state_solitary *game);
 void draw_stock(game_state_solitary *game);

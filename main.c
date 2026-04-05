@@ -35,6 +35,7 @@ TEMPLATEQUEUEPOP_UNSAFE(game_state_solitary);
 TEMPLATESTACKPOP(game_state_solitary);
 
 TEMPLATEGENERALCONTAINER(int);
+TEMPLATESTACKPEEK_UNSAFE(int);
 TEMPLATESTACKPOP_UNSAFE(int);
 TEMPLATEPUSHEND(int);
 
@@ -77,11 +78,15 @@ bool handle_hand(game_state_solitary *game) {
   int_container tableaus =
       (int_container){.data = (int[14]){0}, .capacity = 14, 0};
   push_game_state_solitary_overwrite(*game, &hand_undo);
+  int last_tableau;
   while (true) {
     switch (get_keypressed()) {
     case TABLEAU1:
       push_game_state_solitary_overwrite(*game, &hand_undo);
       if (move_tableau_hand(game, 0)) {
+        last_tableau = ppeek_int_unsafe(&tableaus);
+        if ((tableaus.number != 0) && (last_tableau != 0))
+          show_last_from_tableau(game, last_tableau);
         push_int(0, &tableaus);
         show_game_state(game);
         break;
@@ -91,6 +96,9 @@ bool handle_hand(game_state_solitary *game) {
     case TABLEAU2:
       push_game_state_solitary_overwrite(*game, &hand_undo);
       if (move_tableau_hand(game, 1)) {
+        last_tableau = ppeek_int_unsafe(&tableaus);
+        if ((tableaus.number != 0) && (last_tableau != 1))
+          show_last_from_tableau(game, last_tableau);
         push_int(1, &tableaus);
         show_game_state(game);
         break;
@@ -100,6 +108,9 @@ bool handle_hand(game_state_solitary *game) {
     case TABLEAU3:
       push_game_state_solitary_overwrite(*game, &hand_undo);
       if (move_tableau_hand(game, 2)) {
+        last_tableau = ppeek_int_unsafe(&tableaus);
+        if ((tableaus.number != 0) && (last_tableau != 2))
+          show_last_from_tableau(game, last_tableau);
         push_int(2, &tableaus);
         show_game_state(game);
         break;
@@ -109,6 +120,9 @@ bool handle_hand(game_state_solitary *game) {
     case TABLEAU4:
       push_game_state_solitary_overwrite(*game, &hand_undo);
       if (move_tableau_hand(game, 3)) {
+        last_tableau = ppeek_int_unsafe(&tableaus);
+        if ((tableaus.number != 0) && (last_tableau != 3))
+          show_last_from_tableau(game, last_tableau);
         push_int(3, &tableaus);
         show_game_state(game);
         break;
@@ -118,6 +132,9 @@ bool handle_hand(game_state_solitary *game) {
     case TABLEAU5:
       push_game_state_solitary_overwrite(*game, &hand_undo);
       if (move_tableau_hand(game, 4)) {
+        last_tableau = ppeek_int_unsafe(&tableaus);
+        if ((tableaus.number != 0) && (last_tableau != 4))
+          show_last_from_tableau(game, last_tableau);
         push_int(4, &tableaus);
         show_game_state(game);
         break;
@@ -127,6 +144,9 @@ bool handle_hand(game_state_solitary *game) {
     case TABLEAU6:
       push_game_state_solitary_overwrite(*game, &hand_undo);
       if (move_tableau_hand(game, 5)) {
+        last_tableau = ppeek_int_unsafe(&tableaus);
+        if ((tableaus.number != 0) && (last_tableau != 5))
+          show_last_from_tableau(game, last_tableau);
         push_int(5, &tableaus);
         show_game_state(game);
         break;
@@ -136,6 +156,9 @@ bool handle_hand(game_state_solitary *game) {
     case TABLEAU7:
       push_game_state_solitary_overwrite(*game, &hand_undo);
       if (move_tableau_hand(game, 6)) {
+        last_tableau = ppeek_int_unsafe(&tableaus);
+        if ((tableaus.number != 0) && (last_tableau != 6))
+          show_last_from_tableau(game, last_tableau);
         push_int(6, &tableaus);
         show_game_state(game);
         break;
