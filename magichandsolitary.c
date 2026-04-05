@@ -29,13 +29,17 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define LAST_FROM_TABLEAU_IS_VISIBLE(tableau)                                  \
   ((tableau)->front != (tableau)->number)
 
+void show_last_from_tableau(game_state_solitary *game, int index) {
+  card_stack *current_tableau = &game->tableau[index];
+  if (!LAST_FROM_TABLEAU_IS_VISIBLE(current_tableau) &&
+      !TABLEAU_IS_EMPTY(current_tableau)) {
+    (current_tableau->front)--;
+  }
+}
+
 void finalize_move(game_state_solitary *game) {
   for (int i = 0; i < 7; i++) {
-    card_stack *current_tableau = &game->tableau[i];
-    if (!LAST_FROM_TABLEAU_IS_VISIBLE(current_tableau) &&
-        !TABLEAU_IS_EMPTY(current_tableau)) {
-      (current_tableau->front)--;
-    }
+    show_last_from_tableau(game, i);
   }
 }
 
