@@ -262,7 +262,7 @@ bool quick_tableau(game_state_solitary *game) {
         return true;
       }
     }
-    return true;
+    return false;
   }
   for (int index = 0; index < 7; index++) {
     if (move_window_tableau(game, index))
